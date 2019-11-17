@@ -28,14 +28,18 @@ class datatable:
     __title=""
     __year=""
     __type=""
+    __prob=0.0
     def settitle(self,t):
         self.__title=t 
+    def setprob(self,t):
+        self.__prob=t 
     def setyear(self,t):
         self.__year=t 
     def settype(self,t):
         self.__type=t 
     def disp(self):
         return(self.__title,self.__year,self.__type)
+    
     
 # pudding = [datatable()for i in range(100)]   
 pudding=[]
@@ -98,7 +102,10 @@ def create_vocab():
     p= dict(xc)
     print("counter...",type(p),p)
     for k, v in p.items():
+         prob=v/sum(xc.values())
          print(k, v,end="")
+         print(" ,probablity is:",prob,v,sum(xc.values()))
+         
 #     print("grees",xc)
 #     pairs=xc.items()
 #     print("yoyo",type(pairs))
