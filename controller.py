@@ -24,7 +24,6 @@ lemmatizer = WordNetLemmatizer()
 
 lis=[]
 lisno=[]
-story_count =  askhn_count = showhn_count= poll_count = 0
 
 class datatable:
     __title=""
@@ -63,7 +62,7 @@ class word:
     count2 = 0
     count3= 0
     count4 = 0
-    story_prob =  askhn_prob = showhn_prob = poll_prob = 0
+    prob1 = prob2=prob3=prob4=0
     def __init__(self,a,b,c,d,e) :
         self.word=a
         self.count1=b
@@ -71,22 +70,26 @@ class word:
         self.count3=d
         self.count4=e
     def setfreq1(self,t):
-        self.count1=t     
-        story_prob=round(self.count1/story_count, 3)
+        self.count1=t   
+        if(story_count!=0):  
+            self.prob1=round(self.count1/story_count, 3)
     def setfreq2(self,t):
         self.count2=t 
-        askhn_prob=round(self.count2/askhn_count, 3)
+        if(askhn_count!=0):  
+            self.prob2=round(self.count2/askhn_count, 3)
     def setfreq3(self,t):
-        self.count3=t     
-        showhn_prob=round(self.count3/showhn_count, 3)
+        self.count3=t    
+        if(showhn_count!=0):   
+            self.prob3=round(self.count3/showhn_count, 3)
     def setfreq4(self,t):
         self.count4=t  
-        poll_prob=round(self.count4/poll_count, 3)
+        if(poll_count!=0):  
+            self.prob4=round(self.count4/poll_count, 3)
     def disp(self):
-        return(self.word,self.count1,self.story_prob,
-               self.count2,self.askhn_prob,
-               self.count3,self.showhn_prob,
-               self.count4,self.poll_prob)
+        return(self.word,self.count1,self.prob1,
+               self.count2,self.prob2,
+               self.count3,self.prob3,
+               self.count4,self.prob4)
 
 pudding=[]
 wordlist=[]
@@ -108,21 +111,26 @@ def lemmatizeData():
             if(row[5][0:4]=='2018'):
                 pt = row[3]
                 if(pt == "story"):
-                    print(story_count)
+                    global story_count
                     story_count+=1
-                if(pt == "ask-hn"):
+                if(pt == "ask_hn"):
+                    global askhn_count
                     askhn_count+=1
-                if(pt == "show-hn"):
+                if(pt == "show_hn"):
+                    global showhn_count
                     showhn_count+=1
                 if(pt == "poll"):
+                    global poll_count
                     poll_count+=1
+    with open('sample.csv') as csvfile:
+        readCSV = csv.reader(csvfile, delimiter=',')
         for row in readCSV:
             if(row[5][0:4]=='2018'):
 #                 print("%%%%%%%%%%%%%%%%%%%%%%%%%%...:",row)
                 word_list = nltk.word_tokenize(row[2].lower())
                 title = ' '.join([lemmatizer.lemmatize(w) for w in word_list])
                 post_type = row[3]
-                print("\n********",post_type,":",title)    
+#                 print("\n********",post_type,":",title)    
                 if(post_type == "story"):
                     freq1.update(title.split())
                 if(post_type == "ask_hn"):
@@ -176,7 +184,7 @@ def word_info(freq,post_type):
         if(found==False):
             wordlist.append(word1)        
                 
-        print("\n",i,k, v,prob,end="")
+#         print("\n",i,k, v,prob,end="")
         
 def create_vocab():
     from collections import Counter
@@ -191,18 +199,23 @@ def create_vocab():
 #         pudding[pudding.index(q)] = q
     print(xc)
     p= dict(xc)
-    print("counter...",type(p),p)
+#     print("counter...",type(p),p)
     i=0
     for k, v in p.items():
          prob=round(v/sum(xc.values()), 3)
          i+=1
          print(i,k, v,prob)
 
+story_count =  askhn_count = showhn_count= poll_count = 0
+
 lemmatizeData()
 print("titles in 2018",lis)      
 print("The end\n",end="\n")
 
+i=0
 for w in wordlist:
-    print("word:",w.disp())
+    i+=1
+    print(i,w.disp())
 # create_vocab()
+# print(story_count,askhn_count,showhn_count,poll_count)
 
