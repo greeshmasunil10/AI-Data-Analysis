@@ -86,10 +86,16 @@ class word:
         if(poll_count!=0):  
             self.prob4=round(self.count4/poll_count, 3)
     def disp(self):
-        return(self.word,self.count1,self.prob1,
-               self.count2,self.prob2,
-               self.count3,self.prob3,
-               self.count4,self.prob4)
+        return(self.word+"  "+
+               str(self.count1)+"  "+
+               str(self.count1)+"  "+
+               str(self.count1)+"  "+
+               str(self.count2) +"  "+
+               str(self.prob2)+"  "+
+               str(self.count3)+"  "+
+               str(self.prob3)+"  "+
+               str(self.count4)+"  "+
+               str(self.prob4))
 
 pudding=[]
 wordlist=[]
@@ -213,9 +219,13 @@ print("titles in 2018",lis)
 print("The end\n",end="\n")
 
 i=0
+f = open("model-2018.txt", "w")
 for w in wordlist:
     i+=1
-    print(i,w.disp())
+    f.write(str(i)+'  '+w.disp()+'\n')
+    print(str(i)+'  '+w.disp()+'\n')
+f.close()    
+    
 # create_vocab()
 # print(story_count,askhn_count,showhn_count,poll_count)
 
