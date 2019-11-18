@@ -1,5 +1,5 @@
 # -----------------------------------------------
-# Project 1
+# Project 2
 # Written by Greeshma Sunil
 # For COMP 6721 Section F FJ(1778) - Fall 2019
 # -----------------------------------------------
@@ -37,6 +37,14 @@ class datatable:
         self.__year=t 
     def settype(self,t):
         self.__type=t 
+    def gettitle(self):
+        return self.__title 
+    def getprob(self):
+        return self.__prob 
+    def getyear(self):
+        return self.__year 
+    def gettype(self):
+        return self.__type
     def disp(self):
         return(self.__title,self.__year,self.__type)
     
@@ -44,12 +52,13 @@ class datatable:
 # pudding = [datatable()for i in range(100)]   
 pudding=[]
 train_titles=[]
-def fetchdata():
+def lemmatizeData():
     
     with open('sample.csv') as csvfile:
         readCSV = csv.reader(csvfile, delimiter=',')
         for row in readCSV:
             if(row[5][0:4]=='2018'):
+                print(row)
                 t=row[2].lower()
                 word_list = nltk.word_tokenize(t)
                 print(word_list)
@@ -96,15 +105,17 @@ def create_vocab():
     train_set = train_titles
     xc = Counter()
     print("Creating vocabulary...")
-    for s in train_set:
+    for q in pudding:
+        s=q.gettitle()
         xc.update(s.split())
     print(xc)
     p= dict(xc)
     print("counter...",type(p),p)
+    i=0
     for k, v in p.items():
-         prob=v/sum(xc.values())
-         print(k, v,end="")
-         print(" ,probablity is:",prob,v,sum(xc.values()))
+         prob=round(v/sum(xc.values()), 3)
+         i+=1
+         print(i,k, v,prob)
          
 #     print("grees",xc)
 #     pairs=xc.items()
@@ -119,7 +130,7 @@ def create_vocab():
 #     for it in xc:
 #         print(it)
 
-fetchdata()
+lemmatizeData()
 print("titles in 2018",lis)      
 print("The end\n",end="\n")
 create_vocab()
