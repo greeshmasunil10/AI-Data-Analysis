@@ -6,7 +6,7 @@
 
 
 
-import pandas
+import pandas as pd
 import statistics
 import numpy as np
 from builtins import list
@@ -16,14 +16,7 @@ import nltk
 from nltk.stem import WordNetLemmatizer 
 from nltk.corpus.reader import wordlist
 
-# Init the Wordnet Lemmatizer
 lemmatizer = WordNetLemmatizer()
-
-# Lemmatize Single Word
-# print(lemmatizer.lemmatize("bats"))
-
-lis=[]
-lisno=[]
 
 class datatable:
     __title=""
@@ -100,10 +93,11 @@ class word:
 pudding=[]
 wordlist=[]
 train_titles=[]
-print("fetching data...")
+print("Processing data...")
 
 
 def lemmatizeData():
+    print("Lemmatizing...")
     from collections import Counter
     train_set = train_titles
     freq1 = Counter()
@@ -111,8 +105,12 @@ def lemmatizeData():
     freq3 = Counter()
     freq4 = Counter()
     freq=Counter()
-    with open('sample.csv') as csvfile:
-        readCSV = csv.reader(csvfile, delimiter=',')
+    filename="hn2018_2019.csv"
+    filename="sample.csv"
+    with open(filename,encoding='utf-8') as csvfile:
+#         readCSV = pd.read_csv(filename)
+        readCSV = csv.reader(csvfile, delimiter=',',)
+        print("Segmenting data..")
         for row in readCSV:
             if(row[5][0:4]=='2018'):
                 pt = row[3]
@@ -128,45 +126,45 @@ def lemmatizeData():
                 if(pt == "poll"):
                     global poll_count
                     poll_count+=1
-    with open('sample.csv') as csvfile:
+            else :  
+                del row        
+    with open(filename,encoding='utf-8') as csvfile:
+#         readCSV = pd.read_csv(filename, chunksize=10*8)
         readCSV = csv.reader(csvfile, delimiter=',')
+        print("Calculating Frequencies...")
         for row in readCSV:
             if(row[5][0:4]=='2018'):
-#                 print("%%%%%%%%%%%%%%%%%%%%%%%%%%...:",row)
                 word_list = nltk.word_tokenize(row[2].lower())
                 title = ' '.join([lemmatizer.lemmatize(w) for w in word_list])
                 post_type = row[3]
-#                 print("\n********",post_type,":",title)    
+                print(title)
                 if(post_type == "story"):
                     freq1.update(title.split())
-                if(post_type == "ask_hn"):
-                    freq2.update(title.split())
-                if(post_type == "show_hn"):
-                    freq3.update(title.split())
-                if(post_type == "poll"):
-                    freq4.update(title.split())
-                freq.update(title.split())
-
-                pud = datatable(title,post_type,row[5][0:4])
-                pudding.append(pud)
-                train_titles.append(title)
-    with open('sample.csv') as csvfile:
-        readCSV = csv.reader(csvfile, delimiter=',')
-        for row in readCSV:
-            if(row[5][0:4]=='2018'):
-                word_list = nltk.word_tokenize(row[2].lower())
-                title = ' '.join([lemmatizer.lemmatize(w) for w in word_list])
-                post_type = row[3]
-                if(post_type == "story"):
                     word_info(freq1,post_type)
                 if(post_type == "ask_hn"):
-#                     print("insideeeeeeeee")
+                    freq2.update(title.split())
                     word_info(freq2,post_type)
                 if(post_type == "show_hn"):
+                    freq3.update(title.split())
                     word_info(freq3,post_type)
                 if(post_type == "poll"):
+                    freq4.update(title.split())
                     word_info(freq4,post_type)
-#                 word_info(freq)
+#                 pud = datatable(title,post_type,row[5][0:4])
+#                 pudding.append(pud)
+#                 train_titles.append(title)
+#     with open(filename,encoding='utf-8') as csvfile:
+#         readCSV = csv.reader(csvfile, delimiter=',')
+#         print("Calculating Conditional Probabilities...")
+#         for row in readCSV:
+#             if(row[5][0:4]=='2018'):
+#                 word_list = nltk.word_tokenize(row[2].lower())
+#                 title = ' '.join([lemmatizer.lemmatize(w) for w in word_list])
+#                 post_type = row[3]
+#                 if(post_type == "story"):
+#                 if(post_type == "ask_hn"):
+#                 if(post_type == "show_hn"):
+#                 if(post_type == "poll"):
 def word_info(freq,post_type):
     i=0
     for k, v in dict(freq).items():
@@ -176,7 +174,6 @@ def word_info(freq,post_type):
         if(post_type == "story"):
             word1.setfreq1(v)
         if(post_type == "ask_hn"):
-#             print("************************found",post_type)
             word1.setfreq2(v)
         if(post_type == "show_hn"):
             word1.setfreq3(v)
@@ -189,43 +186,22 @@ def word_info(freq,post_type):
                 found = True
         if(found==False):
             wordlist.append(word1)        
-                
 #         print("\n",i,k, v,prob,end="")
-        
-def create_vocab():
-    from collections import Counter
-    train_set = train_titles
-    xc = Counter()
-    print("Creating vocabulary...")
-    for q in pudding:
-        s=q.gettitle()
-        story = q.gettype()
-        xc.update(s.split())
-        print(q.gettype())
-#         pudding[pudding.index(q)] = q
-    print(xc)
-    p= dict(xc)
-#     print("counter...",type(p),p)
-    i=0
-    for k, v in p.items():
-         prob=round(v/sum(xc.values()), 3)
-         i+=1
-         print(i,k, v,prob)
 
 story_count =  askhn_count = showhn_count= poll_count = 0
 
 lemmatizeData()
-print("titles in 2018",lis)      
-print("The end\n",end="\n")
-
+print("Saving information in file..")
 i=0
 f = open("model-2018.txt", "w")
 for w in wordlist:
     i+=1
     f.write(str(i)+'  '+w.disp()+'\n')
-    print(str(i)+'  '+w.disp()+'\n')
+#     print(str(i)+'  '+w.disp()+'\n')
 f.close()    
     
+print("End of Process!")
+print("Check file for output ")
 # create_vocab()
 # print(story_count,askhn_count,showhn_count,poll_count)
 
