@@ -15,8 +15,10 @@ from attr import __title__
 import nltk
 from nltk.stem import WordNetLemmatizer 
 from nltk.corpus.reader import wordlist
+import time
 
 lemmatizer = WordNetLemmatizer()
+start = time.time()
 
 class datatable:
     __title=""
@@ -137,7 +139,7 @@ def lemmatizeData():
                 word_list = nltk.word_tokenize(row[2].lower())
                 title = ' '.join([lemmatizer.lemmatize(w) for w in word_list])
                 post_type = row[3]
-                print(title)
+#                 print(title)
                 if(post_type == "story"):
                     freq1.update(title.split())
                     word_info(freq1,post_type)
@@ -204,4 +206,5 @@ print("End of Process!")
 print("Check file for output ")
 # create_vocab()
 # print(story_count,askhn_count,showhn_count,poll_count)
-
+end = time.time()
+print("total elapsed time:",end - start)

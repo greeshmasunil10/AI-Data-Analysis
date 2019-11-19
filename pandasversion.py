@@ -15,38 +15,11 @@ from attr import __title__
 import nltk
 from nltk.stem import WordNetLemmatizer 
 from nltk.corpus.reader import wordlist
+import time
 
 lemmatizer = WordNetLemmatizer()
 
-class datatable:
-    __title=""
-    __year=""
-    __type=""
-    __prob=0.0
-    
-    def __init__(self,a,b,c) :
-        self.__title=a
-        self.__type=b
-        self.__year=c
-        
-    def settitle(self,t):
-        self.__title=t 
-    def setprob(self,t):
-        self.__prob=t 
-    def setyear(self,t):
-        self.__year=t 
-    def settype(self,t):
-        self.__type=t  
-    def gettitle(self):
-        return self.__title 
-    def getprob(self):
-        return self.__prob 
-    def getyear(self):
-        return self.__year 
-    def gettype(self):
-        return self.__type
-    def disp(self):
-        return(self.__title,self.__year,self.__type)
+start = time.time()
 
 class word:
     word=""
@@ -106,63 +79,34 @@ def lemmatizeData():
     freq4 = Counter()
     freq=Counter()
     filename="hn2018_2019.csv"
-    filename="sample.csv"
+#     filename="sample.csv"
     with open(filename,encoding='utf-8') as csvfile:
         df = pd.read_csv(filename)
-#         readCSV = csv.reader(csvfile, delimiter=',',)
         print("Segmenting data..")
+        global story_count, askhn_count,showhn_count,poll_count
         for i in range(df.shape[0]):
             if(df['Created At'][i][0:4]=='2018'):
-                pt = df['Post Type'][i]
-                if(pt == "story"):
-                    global story_count
+                title = ' '.join([lemmatizer.lemmatize(w) for w in nltk.word_tokenize(df['Title'][i].lower())])
+                if(df['Post Type'][i] == "story"):
                     story_count+=1
-                if(pt == "ask_hn"):
-                    global askhn_count
-                    askhn_count+=1
-                if(pt == "show_hn"):
-                    global showhn_count
-                    showhn_count+=1
-                if(pt == "poll"):
-                    global poll_count
-                    poll_count+=1
-    with open(filename,encoding='utf-8') as csvfile:
-        df = pd.read_csv(filename)
-#         readCSV = csv.reader(csvfile, delimiter=',')
-        print("Calculating Frequencies...")
-        for i in range(df.shape[0]):
-            if(df['Created At'][i][0:4]=='2018'):
-                word_list = nltk.word_tokenize(df['Title'][i].lower())
-                title = ' '.join([lemmatizer.lemmatize(w) for w in word_list])
-                post_type = df['Post Type'][i]
-                print(title)
-                if(post_type == "story"):
                     freq1.update(title.split())
-                    word_info(freq1,post_type)
-                if(post_type == "ask_hn"):
+                    word_info(freq1,df['Post Type'][i])
+                if(df['Post Type'][i] == "ask_hn"):
+                    askhn_count+=1
                     freq2.update(title.split())
-                    word_info(freq2,post_type)
-                if(post_type == "show_hn"):
+                    word_info(freq2,df['Post Type'][i])
+                if(df['Post Type'][i] == "show_hn"):
+                    showhn_count+=1
                     freq3.update(title.split())
-                    word_info(freq3,post_type)
-                if(post_type == "poll"):
+                    word_info(freq3,df['Post Type'][i])
+                if(df['Post Type'][i] == "poll"):
+                    poll_count+=1
                     freq4.update(title.split())
-                    word_info(freq4,post_type)
-#                 pud = datatable(title,post_type,row[5][0:4])
-#                 pudding.append(pud)
-#                 train_titles.append(title)
-#     with open(filename,encoding='utf-8') as csvfile:
-#         readCSV = csv.reader(csvfile, delimiter=',')
-#         print("Calculating Conditional Probabilities...")
-#         for row in readCSV:
-#             if(row[5][0:4]=='2018'):
-#                 word_list = nltk.word_tokenize(row[2].lower())
-#                 title = ' '.join([lemmatizer.lemmatize(w) for w in word_list])
-#                 post_type = row[3]
-#                 if(post_type == "story"):
-#                 if(post_type == "ask_hn"):
-#                 if(post_type == "show_hn"):
-#                 if(post_type == "poll"):
+                    word_info(freq4,df['Post Type'][i])
+#                 print(title)  
+            if(i%100==0):
+                print("...")
+#         print(i)
 def word_info(freq,post_type):
     i=0
     for k, v in dict(freq).items():
@@ -195,11 +139,12 @@ f = open("model-2018.txt", "w")
 for w in wordlist:
     i+=1
     f.write(str(i)+'  '+w.disp()+'\n')
-#     print(str(i)+'  '+w.disp()+'\n')
+#     print(str(i)+'  '+w.disp())
 f.close()    
     
 print("End of Process!")
 print("Check file for output ")
 # create_vocab()
-# print(story_count,askhn_count,showhn_count,poll_count)
-
+print(story_count,askhn_count,showhn_count,poll_count)
+end = time.time()
+print("total elapsed time:",end - start)
