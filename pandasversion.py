@@ -7,15 +7,10 @@
 
 
 import pandas as pd
-import statistics
-import numpy as np
-from builtins import list
-import csv
-from attr import __title__
 import nltk
 from nltk.stem import WordNetLemmatizer 
-from nltk.corpus.reader import wordlist
 import time
+from mailcap import show
 
 lemmatizer = WordNetLemmatizer()
 
@@ -35,27 +30,24 @@ class word:
         self.count2=c
         self.count3=d
         self.count4=e
-    def setfreq1(self,t):
+
+    def setfreq(self,t,b,c,d):
         self.count1=t   
-        if(story_count!=0):  
-            self.prob1=round(self.count1/story_count, 3)
-    def setfreq2(self,t):
-        self.count2=t 
-        if(askhn_count!=0):  
-            self.prob2=round(self.count2/askhn_count, 3)
-    def setfreq3(self,t):
-        self.count3=t    
-        if(showhn_count!=0):   
-            self.prob3=round(self.count3/showhn_count, 3)
-    def setfreq4(self,t):
-        self.count4=t  
-        if(poll_count!=0):  
-            self.prob4=round(self.count4/poll_count, 3)
+        self.count2=b   
+        self.count3=c   
+        self.count4=d  
+        if(story_count!=0): 
+            self.prob1=round((self.count1+1)/story_count, 3)
+        if(askhn_count!=0): 
+            self.prob2=round((self.count2+1)/story_count, 3)
+        if(showhn_count!=0): 
+            self.prob3=round((self.count3+1)/story_count, 3)
+        if(poll_count!=0): 
+            self.prob4=round((self.count4+1)/story_count, 3)
     def disp(self):
         return(self.word+"  "+
                str(self.count1)+"  "+
-               str(self.count1)+"  "+
-               str(self.count1)+"  "+
+               str(self.prob1)+"  "+
                str(self.count2) +"  "+
                str(self.prob2)+"  "+
                str(self.count3)+"  "+
@@ -65,6 +57,7 @@ class word:
 
 pudding=[]
 wordlist=[]
+wordchecklist=[]
 train_titles=[]
 print("Processing data...")
 
@@ -72,63 +65,56 @@ print("Processing data...")
 def lemmatizeData():
     print("Lemmatizing...")
     from collections import Counter
-    train_set = train_titles
     freq1 = Counter()
     freq2 = Counter()
     freq3 = Counter()
     freq4 = Counter()
-    freq=Counter()
     filename="hn2018_2019.csv"
-#     filename="sample.csv"
-    with open(filename,encoding='utf-8') as csvfile:
-        df = pd.read_csv(filename)
-        print("Segmenting data..")
-        global story_count, askhn_count,showhn_count,poll_count
-        for i in range(df.shape[0]):
-            if(df['Created At'][i][0:4]=='2018'):
-                title = ' '.join([lemmatizer.lemmatize(w) for w in nltk.word_tokenize(df['Title'][i].lower())])
-                if(df['Post Type'][i] == "story"):
-                    story_count+=1
-                    freq1.update(title.split())
-                    word_info(freq1,df['Post Type'][i])
-                if(df['Post Type'][i] == "ask_hn"):
-                    askhn_count+=1
-                    freq2.update(title.split())
-                    word_info(freq2,df['Post Type'][i])
-                if(df['Post Type'][i] == "show_hn"):
-                    showhn_count+=1
-                    freq3.update(title.split())
-                    word_info(freq3,df['Post Type'][i])
-                if(df['Post Type'][i] == "poll"):
-                    poll_count+=1
-                    freq4.update(title.split())
-                    word_info(freq4,df['Post Type'][i])
-#                 print(title)  
-            if(i%100==0):
-                print("...")
-#         print(i)
+    filename="sample.csv"
+    df = pd.read_csv(filename,encoding='utf-8')
+    print("Segmenting data..")
+    global story_count, askhn_count,showhn_count,poll_count
+    for i in range(df.shape[0]):
+        if(df['Created At'][i][0:4]=='2018'):
+            if(df['Post Type'][i] == "story"):
+                story_count+=1
+            if(df['Post Type'][i] == "ask_hn"):
+                askhn_count+=1
+            if(df['Post Type'][i] == "show_hn"):
+                showhn_count+=1
+            if(df['Post Type'][i] == "poll"):
+                poll_count+=1
+    for i in range(df.shape[0]):
+        if(df['Created At'][i][0:4]=='2018'):
+            title = ' '.join([lemmatizer.lemmatize(w) for w in nltk.word_tokenize(df['Title'][i].lower())])
+            if(df['Post Type'][i] == "story"):
+                freq1.update(title.split())
+                word_info(freq1,df['Post Type'][i])
+            if(df['Post Type'][i] == "ask_hn"):
+                freq2.update(title.split())
+                word_info(freq2,df['Post Type'][i])
+            if(df['Post Type'][i] == "show_hn"):
+                freq3.update(title.split())
+                word_info(freq3,df['Post Type'][i])
+            if(df['Post Type'][i] == "poll"):
+                freq4.update(title.split())
+                word_info(freq4,df['Post Type'][i])
 def word_info(freq,post_type):
-    i=0
-    for k, v in dict(freq).items():
-        prob=round(v/sum(freq.values()), 4)
-        i+=1
-        word1 = word(k,0,0,0,0)
+    for wordname, wordcount in dict(freq).items():
+        word1 = word(wordname,0,0,0,0)
         if(post_type == "story"):
-            word1.setfreq1(v)
+            word1.setfreq(wordcount,0,0,0)
         if(post_type == "ask_hn"):
-            word1.setfreq2(v)
+            word1.setfreq(0,wordcount,0,0)
         if(post_type == "show_hn"):
-            word1.setfreq3(v)
+            word1.setfreq(0,0,wordcount,0)
         if(post_type == "poll"):
-            word1.setfreq4(v)
-        found = False    
-        for w in wordlist:
-            if(w.word==k):
-                wordlist[wordlist.index(w)] = word1
-                found = True
-        if(found==False):
-            wordlist.append(word1)        
-#         print("\n",i,k, v,prob,end="")
+            word1.setfreq(0,0,0,wordcount)
+        if(wordname in wordchecklist):
+                wordlist[wordchecklist.index(wordname)] = word1
+        else:
+            wordlist.append(word1)
+            wordchecklist.append(wordname)        
 
 story_count =  askhn_count = showhn_count= poll_count = 0
 
@@ -139,12 +125,11 @@ f = open("model-2018.txt", "w")
 for w in wordlist:
     i+=1
     f.write(str(i)+'  '+w.disp()+'\n')
-#     print(str(i)+'  '+w.disp())
+    print(str(i)+'  '+w.disp())
 f.close()    
     
 print("End of Process!")
 print("Check file for output ")
-# create_vocab()
 print(story_count,askhn_count,showhn_count,poll_count)
 end = time.time()
 print("total elapsed time:",end - start)

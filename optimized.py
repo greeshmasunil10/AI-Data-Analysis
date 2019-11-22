@@ -66,7 +66,9 @@ wordlist=[]
 train_titles=[]
 print("Processing data...")
 
-
+def countfreq():
+    
+    
 def lemmatizeData():
     print("Lemmatizing...")
     from collections import Counter
@@ -88,28 +90,14 @@ def lemmatizeData():
                           for i in range(df.shape[0]) 
                           if(df['Created At'][i][0:4] == '2018' 
                              and df['Post Type'][i]=='story')])
-#         print("Finding ask count..")
-        askhn_count= len([ df['Created At'][i]  
-                          for i in range(df.shape[0]) 
-                          if(df['Created At'][i][0:4] == '2018' 
-                             and df['Post Type'][i]=='ask_hn')])
-#         print("Finding show count..")
-        showhn_count= len([ df['Created At'][i]  
-                          for i in range(df.shape[0]) 
-                          if(df['Created At'][i][0:4] == '2018' 
-                             and df['Post Type'][i]=='show_hn')])
-#         print("Finding poll count..")
-        poll_count= len([ df['Created At'][i]  
-                          for i in range(df.shape[0]) 
-                          if(df['Created At'][i][0:4] == '2018' 
-                             and df['Post Type'][i]=='poll')])
+#       
         
 #         print("Finding story freq..")
         [ freq1.update(' '.join([lemmatizer.lemmatize(w) for w in nltk.word_tokenize(df['Title'][i].lower())]).split())
                           for i in range(df.shape[0]) 
                           if(df['Created At'][i][0:4] == '2018' 
                              and df['Post Type'][i]=='story')]
-        poll_count= [ word_info(freq1,df['Post Type'][i])
+        story_count= [ word_info(freq1,df['Post Type'][i])
                           for i in range(df.shape[0]) 
                           if(df['Created At'][i][0:4] == '2018' 
                              and df['Post Type'][i]=='story')]
@@ -118,7 +106,7 @@ def lemmatizeData():
                           for i in range(df.shape[0]) 
                           if(df['Created At'][i][0:4] == '2018' 
                              and df['Post Type'][i]=='ask_hn')]
-        poll_count= [ word_info(freq1,df['Post Type'][i])
+        askhn_count= [ word_info(freq1,df['Post Type'][i])
                           for i in range(df.shape[0]) 
                           if(df['Created At'][i][0:4] == '2018' 
                              and df['Post Type'][i]=='ask_hn')]
@@ -127,7 +115,7 @@ def lemmatizeData():
                           for i in range(df.shape[0]) 
                           if(df['Created At'][i][0:4] == '2018' 
                              and df['Post Type'][i]=='show_hn')]
-        poll_count= [ word_info(freq1,df['Post Type'][i])
+        showhn_count_count= [ word_info(freq1,df['Post Type'][i])
                           for i in range(df.shape[0]) 
                           if(df['Created At'][i][0:4] == '2018' 
                              and df['Post Type'][i]=='show_hn')]

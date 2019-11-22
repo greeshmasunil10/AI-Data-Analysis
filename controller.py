@@ -83,8 +83,7 @@ class word:
     def disp(self):
         return(self.word+"  "+
                str(self.count1)+"  "+
-               str(self.count1)+"  "+
-               str(self.count1)+"  "+
+               str(self.prob1)+"  "+
                str(self.count2) +"  "+
                str(self.prob2)+"  "+
                str(self.count3)+"  "+
@@ -199,7 +198,7 @@ f = open("model-2018.txt", "w")
 for w in wordlist:
     i+=1
     f.write(str(i)+'  '+w.disp()+'\n')
-#     print(str(i)+'  '+w.disp()+'\n')
+    print(str(i)+'  '+w.disp())
 f.close()    
     
 print("End of Process!")
