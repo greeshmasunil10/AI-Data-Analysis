@@ -15,7 +15,7 @@ import math
 start = time.time()
 lemmatizer = WordNetLemmatizer()
 filename="hn2018_2019.csv"
-filename="sample100.csv"
+filename="sample500.csv"
 smooth=0.5
 global wordlist
 
@@ -174,7 +174,12 @@ def test_data():
             global wordlist
             for word1 in words:
                 checkword=next((x for x in wordlist if x.word == word1),  
-                                Word(word1))
+                                None)
+                if(checkword==None):
+                    checkword=Word(word1)
+                else:
+                    print(word1)
+                    
                 if(checkword.prob1!=0):storyscore+= math.log(checkword.prob1,10)
                 if(checkword.prob2!=0):askscore+= math.log(checkword.prob2,10)
                 if(checkword.prob3!=0):showscore+= math.log(checkword.prob3,10)
