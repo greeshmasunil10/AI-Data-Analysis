@@ -173,12 +173,8 @@ def test_data():
             if(pollprior!=0):pollscore=math.log(pollprior,10)
             global wordlist
             for word1 in words:
-                nf="none"
-#                 print(word1)
                 checkword=next((x for x in wordlist if x.word == word1),  
                                 Word(word1))
-#                 print(word1)
-#                 print(checkword.prob1)
                 if(checkword.prob1!=0):storyscore+= math.log(checkword.prob1,10)
                 if(checkword.prob2!=0):askscore+= math.log(checkword.prob2,10)
                 if(checkword.prob3!=0):showscore+= math.log(checkword.prob3,10)
@@ -195,7 +191,7 @@ def test_data():
                 res="poll"
             print(res,df['Post Type'][i],end=":")    
             if(df['Post Type'][i]==res):
-                print("correct")
+                print("right")
                 c+=1
             else:
                 print("wrong")  
@@ -220,12 +216,11 @@ for w in wordlist:
 #     except:
 #         continue
 f.close()       
-print(storycount,askcount,showcount,pollcount)
-print(storyprior,askprior,showprior,pollprior)
-print(len(freq1.values()),len(freq2.values()),len(freq3.values()),len(freq4.values()))
-print("End of Process!")
-print("Check file for output ")
+print("word count:",storycount,askcount,showcount,pollcount)
+print("prior probabilities:",storyprior,askprior,showprior,pollprior)
+print("Check file for output..\n")
 end = time.time()
 test_data()
 print("Total elapsed time:",round(end - start,1),"seconds")
-# os.system("notepad.exe model-2018.txt")
+os.system("notepad.exe model-2018.txt")
+print("End of Process!")
