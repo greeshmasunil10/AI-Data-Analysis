@@ -179,8 +179,9 @@ def test_data():
                 if(checkword.prob2!=0):askscore+= math.log(checkword.prob2,10)
                 if(checkword.prob3!=0):showscore+= math.log(checkword.prob3,10)
                 if(checkword.prob4!=0):pollscore+= math.log(checkword.prob4,10)
-            check=[storyscore,askscore,showscore]    
+            check=[storyscore,askscore,showscore,pollscore]    
             print(title,max(check)) 
+            check=list(filter(lambda a: a != 0, check) )   
             if(check.index(max(check))==0):
                 res="story"
             if(check.index(max(check))==1):
@@ -189,6 +190,7 @@ def test_data():
                 res="show_hn"
             if(check.index(max(check))==3):
                 res="poll"
+            print(check)
             print(res,df['Post Type'][i],end=":")    
             if(df['Post Type'][i]==res):
                 print("right")
@@ -222,5 +224,5 @@ print("Check file for output..\n")
 end = time.time()
 test_data()
 print("Total elapsed time:",round(end - start,1),"seconds")
-os.system("notepad.exe model-2018.txt")
+# os.system("notepad.exe model-2018.txt")
 print("End of Process!")
