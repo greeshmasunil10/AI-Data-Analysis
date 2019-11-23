@@ -6,15 +6,19 @@
 import pandas as pd
 import nltk
 from nltk.stem import WordNetLemmatizer 
+from nltk.tokenize import MWETokenizer
 import time
 import os
 from collections import Counter
+import math
                                       
 start = time.time()
 lemmatizer = WordNetLemmatizer()
 filename="hn2018_2019.csv"
 filename="sample100.csv"
 smooth=0.5
+global wordlist
+
 wordlist=[]
 wordchecklist=[]
 freq1 = Counter()
@@ -24,7 +28,7 @@ freq4 = Counter()
 freq = Counter()
 global df
 
-class word:
+class Word:
     word=""
     count1 =0
     count2 = 0
@@ -44,6 +48,19 @@ class word:
         if(askcount!=0):self.prob2=round(smooth/(askcount+vocabsize*smooth),7)
         if(showcount!=0):self.prob3=round(smooth/(showcount+vocabsize*smooth),7)
         if(pollcount!=0):self.prob4=round(smooth/(pollcount+vocabsize*smooth),7)
+        
+    def getword(self):
+        return Word
+        
+    def getprob(self,a):
+        if(a==1):
+            return self.prob1
+        if(a==2):
+            return self.prob2
+        if(a==3):
+            return self.prob3
+        return self.prob4
+        
 
     def setfreq(self,t,b,c,d):
         if(t!=-1): self.count1=t   
@@ -71,12 +88,17 @@ class word:
                str(self.prob4))
 
 def train_data():
+    global df
     df =pd.read_csv(filename,encoding='ISO-8859-1')
     global storycount, askcount,showcount,pollcount
     print("Segmenting data..")
     for i in range(df.shape[0]):
         if(df['Created At'][i][0:4]=='2018'):
-            title = ' '.join([lemmatizer.lemmatize(w) for w in nltk.word_tokenize(df['Title'][i].lower())])
+            tokenizer = MWETokenizer()
+#             tokenizer.tokenize('Something about the west wing'.split())
+            title = ' '.join([lemmatizer.lemmatize(w) for w in 
+#                               tokenizer.tokenize(df['Title'][i].lower().split())])
+                            nltk.word_tokenize(df['Title'][i].lower())])
             freq.update(title.split())
             if(df['Post Type'][i] == "story"):
                 freq1.update(title.split())
@@ -92,6 +114,12 @@ def train_data():
     pollcount=len(freq4.values())
     global vocabsize
     vocabsize=len(freq.values())
+    global storyprior,askprior,showprior,pollprior
+    storyprior=storycount/vocabsize
+    askprior=askcount/vocabsize
+    showprior=showcount/vocabsize
+    pollprior=pollcount/vocabsize
+    
     print("Calculating probabilities...")
     j=0
     for i in range(df.shape[0]):
@@ -107,14 +135,14 @@ def train_data():
         j+=1
         if(j%100==0):
             print("...")
-    print("Most common word in story:",freq1.most_common(1)) 
+    print("Most common Word in story:",freq1.most_common(1)) 
 
 def update_word_frequency(freq,post_type):
     i=1
     for wordname, wordcount in dict(freq).items():
         word1=next((x for x in wordlist if x.word == wordname), None)
         if(word1==None):
-            word1 = word(wordname)
+            word1 = Word(wordname)
         if(post_type == "story"):
             word1.setfreq(wordcount,-1,-1,-1)
         if(post_type == "ask_hn"):
@@ -132,24 +160,49 @@ def update_word_frequency(freq,post_type):
         i+=1    
 
 def test_data():
+    c=0
+    f=0
     for i in range(df.shape[0]):
         if(df['Created At'][i][0:4]=='2019'):
             title = ' '.join([lemmatizer.lemmatize(w) for w in nltk.word_tokenize(df['Title'][i].lower())])
-            freq.update(title.split())
-            if(df['Post Type'][i] == "story"):
-                freq1.update(title.split())
-            if(df['Post Type'][i] == "ask_hn"):
-                freq2.update(title.split())
-            if(df['Post Type'][i] == "show_hn"):
-                freq3.update(title.split())
-            if(df['Post Type'][i] == "poll"):
-                freq4.update(title.split())
-
-
-
-
-
-
+            words=title.split()
+            storyscore= askscore = showscore= pollscore=0
+            if(storyprior!=0):storyscore=math.log(storyprior,10)
+            if(askprior!=0):askscore=math.log(askprior,10)
+            if(showprior!=0):showscore=math.log(showprior,10)
+            if(pollprior!=0):pollscore=math.log(pollprior,10)
+            global wordlist
+            for word1 in words:
+                nf="none"
+#                 print(word1)
+                checkword=next((x for x in wordlist if x.word == word1),  
+                                Word(word1))
+#                 print(word1)
+#                 print(checkword.prob1)
+                if(checkword.prob1!=0):storyscore+= math.log(checkword.prob1,10)
+                if(checkword.prob2!=0):askscore+= math.log(checkword.prob2,10)
+                if(checkword.prob3!=0):showscore+= math.log(checkword.prob3,10)
+                if(checkword.prob4!=0):pollscore+= math.log(checkword.prob4,10)
+            check=[storyscore,askscore,showscore]    
+            print(title,max(check)) 
+            if(check.index(max(check))==0):
+                res="story"
+            if(check.index(max(check))==1):
+                res="ask_hn"
+            if(check.index(max(check))==2):
+                res="show_hn"
+            if(check.index(max(check))==3):
+                res="poll"
+            print(res,df['Post Type'][i],end=":")    
+            if(df['Post Type'][i]==res):
+                print("correct")
+                c+=1
+            else:
+                print("wrong")  
+                f+=1  
+            print()    
+    print(round(c/(c+f)*100,2),"success!")        
+    print(round(f/(c+f)*100,2),"failure!")        
 
 
 print("Processing data...")
@@ -168,9 +221,11 @@ for w in wordlist:
 #         continue
 f.close()       
 print(storycount,askcount,showcount,pollcount)
+print(storyprior,askprior,showprior,pollprior)
 print(len(freq1.values()),len(freq2.values()),len(freq3.values()),len(freq4.values()))
 print("End of Process!")
 print("Check file for output ")
 end = time.time()
+test_data()
 print("Total elapsed time:",round(end - start,1),"seconds")
-os.system("notepad.exe model-2018.txt")
+# os.system("notepad.exe model-2018.txt")
