@@ -11,11 +11,12 @@ import time
 import os
 from collections import Counter
 import math
+from mailcap import show
                                       
 start = time.time()
 lemmatizer = WordNetLemmatizer()
 filename="hn2018_2019.csv"
-filename="sample500.csv"
+filename="sample100.csv"
 smooth=0.5
 global wordlist
 
@@ -162,6 +163,8 @@ def update_word_frequency(freq,post_type):
 def test_data():
     c=0
     f=0
+    k=0
+    f1 = open("baseline-result.txt", "w",encoding='ISO-8859-1')
     for i in range(df.shape[0]):
         if(df['Created At'][i][0:4]=='2019'):
             title = ' '.join([lemmatizer.lemmatize(w) for w in nltk.word_tokenize(df['Title'][i].lower())])
@@ -198,12 +201,24 @@ def test_data():
             print(check)
             print(res,df['Post Type'][i],end=":")    
             if(df['Post Type'][i]==res):
-                print("right")
+                label="right"
                 c+=1
             else:
-                print("wrong")  
+                label="wrong"
                 f+=1  
+            print(label)    
             print()    
+            k+=1
+            f1.write(str(k)+'  '+title+"  "+
+                         res+"  "+
+                         str(round(storyscore,7))+"  "+
+                         str(round(askscore,7))+"  "+
+                         str(round(showscore,7))+"  "+
+                         str(round(pollscore,7))+"  "+
+                         df['Post Type'][i]+"  "+
+                         label+"  "+
+                         '\n')                   
+                
     print(round(c/(c+f)*100,2),"success!")        
     print(round(f/(c+f)*100,2),"failure!")        
 
@@ -230,4 +245,5 @@ end = time.time()
 test_data()
 print("Total elapsed time:",round(end - start,1),"seconds")
 # os.system("notepad.exe model-2018.txt")
+os.system("notepad.exe baseline-result.txt")
 print("End of Process!")

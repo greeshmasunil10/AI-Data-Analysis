@@ -1,0 +1,11 @@
+1  million of netflix user are using someone else password  story  -24.9389008  -25.7165678  -26.0684997  0  story  right  
+2  nasa researcher catalogue all microbe and fungi on the i  ask_hn  -26.9627605  -26.7024318  -27.8880963  0  story  wrong  
+3  a mit crash course on hacker tool  story  -18.7539072  -19.0545667  -20.5035729  0  story  right  
+4  ask hn : recommend a software release process for a small , agile team ?  ask_hn  -38.7256557  -34.0571704  -39.1370505  0  ask_hn  right  
+5  yacy decentralized web search  ask_hn  -12.1688806  -11.6549062  -11.6747492  0  story  wrong  
+6  dockerized ethereum private environment compatible with metamask and remix  story  -25.3928852  -25.9596058  -25.5870663  0  story  right  
+7  a remarkable rail journey into the horn of africa past , and future  story  -33.5219274  -35.7572064  -35.7540531  0  story  right  
+8  kegworth air disaster  story  -8.7414037  -9.2569662  -9.3737192  0  story  right  
+9  visualizing recurrent neural network  story  -11.8678506  -12.1179061  -12.1561826  0  story  right  
+10  mobile lending app branch partner with visa , announces $ 170m in funding  story  -36.170166  -36.750153  -36.2354865  0  story  right  
+11  the strategic independent  story  -7.7993956  -8.5509282  -8.8922858  0  story  right  
