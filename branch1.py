@@ -18,7 +18,7 @@ from nltk.corpus import stopwords
 start = time.time()
 lemmatizer = WordNetLemmatizer()
 filename="Resources\hn2018_2019.csv"
-filename="Resources\sample500.csv"
+filename="Resources\sample100.csv"
 smooth=0.5
 global wordlist
 
@@ -47,14 +47,14 @@ class Word:
         self.count2=0
         self.count3=0
         self.count4=0
-#         if(storycount!=0):self.prob1=round(smooth/(0+vocabsize*smooth),7)
-#         if(askcount!=0):self.prob2=round(smooth/(0+vocabsize*smooth),7)
-#         if(showcount!=0):self.prob3=round(smooth/(0+vocabsize*smooth),7)
-#         if(pollcount!=0):self.prob4=round(smooth/(0+vocabsize*smooth),7)
-        if(storycount!=0):self.prob1=round(smooth/(storycount+vocabsize*smooth),7)
-        if(askcount!=0):self.prob2=round(smooth/(askcount+vocabsize*smooth),7)
-        if(showcount!=0):self.prob3=round(smooth/(showcount+vocabsize*smooth),7)
-        if(pollcount!=0):self.prob4=round(smooth/(pollcount+vocabsize*smooth),7)
+        if(storycount!=0):self.prob1=round(smooth/(0+vocabsize*smooth),7)
+        if(askcount!=0):self.prob2=round(smooth/(0+vocabsize*smooth),7)
+        if(showcount!=0):self.prob3=round(smooth/(0+vocabsize*smooth),7)
+        if(pollcount!=0):self.prob4=round(smooth/(0+vocabsize*smooth),7)
+#         if(storycount!=0):self.prob1=round(smooth/(storycount+vocabsize*smooth),7)
+#         if(askcount!=0):self.prob2=round(smooth/(askcount+vocabsize*smooth),7)
+#         if(showcount!=0):self.prob3=round(smooth/(showcount+vocabsize*smooth),7)
+#         if(pollcount!=0):self.prob4=round(smooth/(pollcount+vocabsize*smooth),7)
         
     def getword(self):
         return Word
@@ -105,39 +105,18 @@ def tokenise_model(df):
     return df
 
 def train_data():
-    global df
     global wordlist
     df =pd.read_csv(filename,encoding='ISO-8859-1')
     global storycount, askcount,showcount,pollcount
+    global freq1,freq2,freq3,freq4,freq
     print("Segmenting data..")
+    df = df[(df['Created At']<'2019')]
     df= tokenise_model(df)
-#     for i in range(df.shape[0]):
-#         if(df['Created At'][i][0:4]=='2018'):
-# #             tokenizer = MWETokenizer()
-# #             tokenizer = RegexpTokenizer(r'[\d.,]+|[A-Z][.A-Z]+\b\.*|\w+|\S')
-# #             tokenizer.tokenize('Something about the west wing'.split())
-#             title = ' '.join([lemmatizer.lemmatize(w) for w in 
-# #                             tokenizer.tokenize(df['Title'][i].lower())])
-#                             nltk.word_tokenize(df['Title'][i].lower())])
-#             freq.update(title.split())
-#             if(df['Post Type'][i] == "story"):
-#                 freq1.update(title.split())
-#             if(df['Post Type'][i] == "ask_hn"):
-#                 freq2.update(title.split())
-#             if(df['Post Type'][i] == "show_hn"):
-#                 freq3.update(title.split())
-#             if(df['Post Type'][i] == "poll"):
-#                 freq4.update(title.split())
-    print("printkjbn")
-#     print(df[(df['Post Type']=='story')]['Title'])
-  
-#     freq1.update(df[(df['Post Type']=='story')]['Title'].values.split())
     df[(df['Post Type']=='story')]['Title'].apply(lambda x: [freq1.update(x.split())])
     df[(df['Post Type']=='ask_hn')]['Title'].apply(lambda x: [freq2.update(x.split())])
     df[(df['Post Type']=='show_hn')]['Title'].apply(lambda x: [freq3.update(x.split())])
     df[(df['Post Type']=='poll')]['Title'].apply(lambda x: [freq4.update(x.split())])
     df['Title'].apply(lambda x: [freq.update(x.split())])
-    print(freq1)
     storycount=len(freq1.values())
     askcount=len(freq2.values())
     showcount=len(freq3.values())
@@ -151,20 +130,11 @@ def train_data():
     pollprior=pollcount/vocabsize
     
     print("Calculating probabilities...")
-    j=0
-    for i in range(df.shape[0]):
-        if(df['Created At'][i][0:4]=='2018'):
-            if(df['Post Type'][i] == "story"):
-                update_word_frequency(freq1,df['Post Type'][i])
-            if(df['Post Type'][i] == "ask_hn"):
-                update_word_frequency(freq2,df['Post Type'][i])
-            if(df['Post Type'][i] == "show_hn"):
-                update_word_frequency(freq3,df['Post Type'][i])
-            if(df['Post Type'][i] == "poll"):
-                update_word_frequency(freq4,df['Post Type'][i])
-        j+=1
-        if(j%100==0):
-            print("...")
+    df[(df['Post Type']=='story')]['Post Type'].apply(lambda x: update_word_frequency(freq1,x))
+    df[(df['Post Type']=='ask_hn')]['Post Type'].apply(lambda x: update_word_frequency(freq2,x))
+    df[(df['Post Type']=='show_hn')]['Post Type'].apply(lambda x: update_word_frequency(freq3,x))
+    df[(df['Post Type']=='poll')]['Post Type'].apply(lambda x: update_word_frequency(freq4,x))
+
     print("Most common Word in story:",freq1.most_common(1)) 
     print("Saving information in file..")
     f = open("Output\model-2018.txt", "w",encoding='ISO-8859-1')
@@ -209,6 +179,7 @@ def removeStopwords(wordlist, stopwords):
 
 def test_data(wordlist,resfile):
     print("Testing Data...")
+    df =pd.read_csv(filename,encoding='ISO-8859-1')
     c=0
     f=0
     k=0
@@ -280,17 +251,101 @@ def test_data(wordlist,resfile):
 
 def remove_stopwords():
     stopwords = []
+    global freq1,freq2,freq3,freq4,freq,storycount,askcount,showcount,pollcount
+    global wordlist
     with open("Resources\\Stopwords.txt", "r") as f:
         for line in f:
             stopwords.extend(line.split())
-    lis=[w for w in wordlist if w.word not in stopwords]
-#     print("printing list")
-#     for w in lis:
-#         try:
-#             print(w.word)
-#         except: continue    
-#     print(w.word for w in lis)
-    return lis
+    wordlist=[w for w in wordlist if w.word not in stopwords]
+    for it in stopwords:
+        if it in dict(freq1):
+            del freq1[it]
+    for it in stopwords:
+        if it in dict(freq2):
+            del freq2[it]
+    for it in stopwords:
+        if it in dict(freq3):
+            del freq3[it]
+    for it in stopwords:
+        if it in dict(freq4):
+            del freq4[it]
+    for it in stopwords:
+        if it in dict(freq):
+            del freq[it]
+    storycount=len(freq1.values())
+    askcount=len(freq2.values())
+    showcount=len(freq3.values())
+    pollcount=len(freq4.values())
+    global vocabsize
+    vocabsize=len(freq.values())
+    global storyprior,askprior,showprior,pollprior
+    storyprior=storycount/vocabsize
+    askprior=askcount/vocabsize
+    showprior=showcount/vocabsize
+    pollprior=pollcount/vocabsize
+    
+    f = open("Output\stopword-model.txt", "w",encoding='ISO-8859-1')
+    wordlist = sorted(wordlist, key=lambda x: x.word, reverse=False)
+    print("total no of words:",vocabsize)
+    i=0
+    for w in wordlist:
+#     try:
+        i+=1
+        f.write(str(i)+'  '+w.disp()+'\n')  
+#         print((str(i)+'  '+w.disp()))
+#     except:
+#         continue
+    f.close() 
+    
+    return wordlist
+
+def filterlength():
+    global freq1,freq2,freq3,freq4,freq,storycount,askcount,showcount,pollcount
+    global wordlist
+    for it in dict(freq1):
+        if len(it)<=2 or len(it)>=9:
+            del freq1[it]
+    for it in dict(freq2):
+        if len(it)<=2 or len(it)>=9:
+            del freq2[it]
+    for it in dict(freq3):
+        if len(it)<=2 or len(it)>=9:
+            del freq3[it]
+    for it in dict(freq4):
+        if len(it)<=2 or len(it)>=9:
+            del freq4[it]
+    for it in dict(freq):
+        if len(it)<=2 or len(it)>=9:
+            del freq[it]
+    wordlist=[w for w in wordlist if len(w.word)<=2 or len(w.word)>=9]
+                  
+
+    storycount=len(freq1.values())
+    askcount=len(freq2.values())
+    showcount=len(freq3.values())
+    pollcount=len(freq4.values())
+    global vocabsize
+    vocabsize=len(freq.values())
+    global storyprior,askprior,showprior,pollprior
+    storyprior=storycount/vocabsize
+    askprior=askcount/vocabsize
+    showprior=showcount/vocabsize
+    pollprior=pollcount/vocabsize
+    
+    f = open("Output\wordlength-model.txt", "w",encoding='ISO-8859-1')
+    wordlist = sorted(wordlist, key=lambda x: x.word, reverse=False)
+    print("total no of words:",vocabsize)
+    i=0
+    for w in wordlist:
+#     try:
+        i+=1
+        f.write(str(i)+'  '+w.disp()+'\n')  
+#         print((str(i)+'  '+w.disp()))
+#     except:
+#         continue
+    f.close()
+    
+    return wordlist
 
 def startcode():
     print("Processing data...")
@@ -299,14 +354,31 @@ def startcode():
     print("word count:",storycount,askcount,showcount,pollcount)
     print("prior probabilities:",storyprior,askprior,showprior,pollprior)
     print("Check file for output..\n")
+#     print(freq)
     test_data(wordlist,"Output\\baseline-result.txt")
-    stoplist=remove_stopwords()
+    
+    
     print("\nTrying again with stop words...")
+    stoplist=remove_stopwords()
+    print("size:",vocabsize)
+    print("word count:",storycount,askcount,showcount,pollcount)
+    print("prior probabilities:",storyprior,askprior,showprior,pollprior)
+    print("size:",vocabsize)
     test_data(stoplist,"Output\\stopword-result.txt")
+    
+    
+    print("\nTrying again with length filter...")
+    lis=filterlength()
+    print("size:",vocabsize)
+    print("word count:",storycount,askcount,showcount,pollcount)
+    print("prior probabilities:",storyprior,askprior,showprior,pollprior)
+    print("size:",vocabsize)
+    test_data(lis,"Output\\wordlength-result.txt")
+
     end = time.time()
     print("Total elapsed time:",round(end - start,1),"seconds")
-    os.system("notepad.exe Output\\model-2018.txt")
-    os.system("notepad.exe Output\\baseline-result.txt")
+#     os.system("notepad.exe Output\\model-2018.txt")
+#     os.system("notepad.exe Output\\baseline-result.txt")
     print("End of Process!")
 
 startcode()

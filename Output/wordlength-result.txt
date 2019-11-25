@@ -1,0 +1,15 @@
+1  million of netflix user are using someone else password  story  -22.9719285  -23.6801065  -23.9369328  0  story  right  
+2  nasa researcher catalogue all microbe and fungi on the i  story  -25.5147584  -26.2229364  -26.4797627  0  story  right  
+3  a mit crash course on hacker tool  story  -17.8862687  -18.5944467  -18.851273  0  story  right  
+4  ask hn : recommend a software release process for a small , agile team ?  story  -38.2289079  -38.9370859  -39.1939122  0  ask_hn  wrong  
+5  yacy decentralized web search  story  -10.4139191  -11.1212294  -11.3780557  0  story  right  
+6  dockerized ethereum private environment compatible with metamask and remix  story  -22.9719285  -23.6801065  -23.9369328  0  story  right  
+7  a remarkable rail journey into the horn of africa past , and future  story  -33.1432481  -33.8514261  -34.1082524  0  story  right  
+8  kegworth air disaster  story  -7.7149491  -8.4231271  -8.6799534  0  story  right  
+9  visualizing recurrent neural network  story  -10.257779  -10.965957  -11.2227833  0  story  right  
+10  mobile lending app branch partner with visa , announces $ 170m in funding  story  -33.1432481  -33.8514261  -34.1082524  0  story  right  
+11  the strategic independent  story  -7.7149491  -8.4231271  -8.6799534  0  story  right  
+12  show hn : i created a website to compare online service security , need your help  story  -40.7717378  -41.4799158  -41.7367421  0  show_hn  wrong  
+13  ask hn : graph database with visual editor for personal use  story  -28.0575883  -28.7657663  -29.0225926  0  ask_hn  wrong  
+14  ask hn : good article on ux design ?  story  -22.9719285  -23.6801065  -23.9369328  0  ask_hn  wrong  
+15  show hn : machine learning experiment organizer  story  -17.8862687  -18.5944467  -18.851273  0  show_hn  wrong  

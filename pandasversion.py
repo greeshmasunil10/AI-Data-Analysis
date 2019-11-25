@@ -18,7 +18,7 @@ from nltk.corpus import stopwords
 start = time.time()
 lemmatizer = WordNetLemmatizer()
 filename="Resources\hn2018_2019.csv"
-filename="Resources\sample500.csv"
+filename="Resources\sample100.csv"
 smooth=0.5
 global wordlist
 
@@ -47,14 +47,14 @@ class Word:
         self.count2=0
         self.count3=0
         self.count4=0
-        if(storycount!=0):self.prob1=round(smooth/(0+vocabsize*smooth),7)
-        if(askcount!=0):self.prob2=round(smooth/(0+vocabsize*smooth),7)
-        if(showcount!=0):self.prob3=round(smooth/(0+vocabsize*smooth),7)
-        if(pollcount!=0):self.prob4=round(smooth/(0+vocabsize*smooth),7)
-#         if(storycount!=0):self.prob1=round(smooth/(storycount+vocabsize*smooth),7)
-#         if(askcount!=0):self.prob2=round(smooth/(askcount+vocabsize*smooth),7)
-#         if(showcount!=0):self.prob3=round(smooth/(showcount+vocabsize*smooth),7)
-#         if(pollcount!=0):self.prob4=round(smooth/(pollcount+vocabsize*smooth),7)
+#         if(storycount!=0):self.prob1=round(smooth/(0+vocabsize*smooth),7)
+#         if(askcount!=0):self.prob2=round(smooth/(0+vocabsize*smooth),7)
+#         if(showcount!=0):self.prob3=round(smooth/(0+vocabsize*smooth),7)
+#         if(pollcount!=0):self.prob4=round(smooth/(0+vocabsize*smooth),7)
+        if(storycount!=0):self.prob1=round(smooth/(storycount+vocabsize*smooth),7)
+        if(askcount!=0):self.prob2=round(smooth/(askcount+vocabsize*smooth),7)
+        if(showcount!=0):self.prob3=round(smooth/(showcount+vocabsize*smooth),7)
+        if(pollcount!=0):self.prob4=round(smooth/(pollcount+vocabsize*smooth),7)
         
     def getword(self):
         return Word
