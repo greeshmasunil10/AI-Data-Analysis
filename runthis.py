@@ -15,6 +15,8 @@ from mailcap import show
 from nltk.tokenize.regexp import RegexpTokenizer
 from nltk.corpus import stopwords
 from builtins import input
+import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt2
                                       
 start = time.time()
 lemmatizer = WordNetLemmatizer()
@@ -229,7 +231,7 @@ def test_data(wordlist,resfile):
             check=list(filter(lambda a: a != 0, check) )   
             if(check==[]):
                 print("Vocabulary is too small.. Cannot predict Post Type!")
-                return []
+                return 0
             if(check.index(max(check))==0):
                 res="story"
             if(check.index(max(check))==1):
@@ -255,7 +257,8 @@ def test_data(wordlist,resfile):
                          label+"  "+
                          '\n')                   
                 
-    print(str(round(c/(c+f)*100,2))+"%","accurate!")        
+    print(str(round(c/(c+f)*100,2))+"%","accurate!") 
+    return round(c/(c+f)*100,2)       
 
 def remove_stopwords():
     stopwords = []
@@ -425,20 +428,29 @@ def gradualfreq():
     print()
     freqfilter(1)   
     update_freq()
+    x=[]
+    y=[]
     print("freq filter value:",1)
-    test_data(wordlist, "Output\\frequency_filter_output\\smoothfilter_1_result.txt")
+    val=test_data(wordlist, "Output\\frequency_filter_output\\smoothfilter_1_result.txt")
+    x.append(1)
+    y.append(val)
     print("Vocabulary size:",vocabsize)
     createmodelfile("Output\\frequency_filter_output\\gradual_freq_1_model-2018.txt")
-    
     for i in range(1, 5):
         i=i*5
+        x.append(i)
         print()
         freqfilter(i)
         update_freq()
         print("Freq filter value:",i)
-        test_data(wordlist, "Output\\frequency_filter_output\\smoothfilter_"+str(i)+"_result.txt")
+        val=test_data(wordlist, "Output\\frequency_filter_output\\smoothfilter_"+str(i)+"_result.txt")
+        y.append(val)
         createmodelfile("Output\\frequency_filter_output\\gradual_freq_"+str(i)+"_model-2018.txt")
         print("Vocabulary size:",vocabsize)
+    plt2.plot(x,y) 
+    plt2.ylabel('Performance')
+    plt2.xlabel('Frequency')
+    plt2.show()
     
 def createmodelfile(filename):
     global wordlist
@@ -453,14 +465,22 @@ def createmodelfile(filename):
 def gradualsmooth():
     global wordlist
     train_data()
+    x=[]
+    y=[]
     for i in range(1, 11):
         i=round(i*0.1,2)
+        x.append(i)
         print()
         update_smooth(i)
         print("smooth value:",i)
-        test_data(wordlist, "Output\\smooth_filter_output\\smoothfilter_"+str(i)+"_result_.txt")
+        val=test_data(wordlist, "Output\\smooth_filter_output\\smoothfilter_"+str(i)+"_result_.txt")
+        y.append(val)
         createmodelfile("Output\\smooth_filter_output\\gradual_smooth_"+str(i)+"_model-2018.txt")
         print("Vocabulary size:",vocabsize)
+    plt.plot(x, y)  
+    plt.ylabel('Performance')
+    plt.xlabel('smooth value')
+    plt.show()  
 
     
 filename="Resources\\sample"+input("Enter input file:")+".csv"    

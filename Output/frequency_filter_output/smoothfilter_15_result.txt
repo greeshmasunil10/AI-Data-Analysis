@@ -1,0 +1,24 @@
+1  comet : commonsense transformer for automatic knowledge graph construction  story  0.0707481  -1.1684748  -1.4774555  0.0  story  right  
+2  super mario royale  story  -0.1139434  -0.8129134  -1.1139434  0.0  story  right  
+3  airbnb expands experience into multiday adventure  story  -0.1139434  -0.8129134  -1.1139434  0.0  story  right  
+4  ask hn : encryption and 5tb+ backup  ask_hn  -2.3464135  -0.849716  -2.602655  0.0  ask_hn  right  
+5  retiree might run out of money 10 year before they die  story  0.1160662  -2.1851789  -3.5954294  0.0  story  right  
+6  building a single system image cluter with gnu/hurd [ pdf ]  story  0.2946785  -2.1210189  -2.1922569  0.0  story  right  
+7  ask hn : graph database with visual editor for personal use  ask_hn  -2.4295538  -1.4281121  -3.4424207  0.0  ask_hn  right  
+8  compositional generalization through meta sequence-to-sequence learning  story  -0.1139434  -0.8129134  -1.1139434  0.0  story  right  
+9  ultralisp : a fast-moving common lisp software distribution  story  0.3290065  -1.0655015  -1.4149733  0.0  story  right  
+10  public post are implicit endorsement of the framework they discus  story  0.4231488  -2.584317  -4.2280735  0.0  story  right  
+11  “too cheap to meter” : a history of the phrase ( 2016 )  story  1.6973253  -2.653368  -3.6802615  0.0  story  right  
+12  security compliance at cloudflare  story  -0.1139434  -0.8129134  -1.1139434  0.0  story  right  
+13  relearn cs layout  story  -0.1139434  -0.8129134  -1.1139434  0.0  story  right  
+14  neural arabic question answering  story  -0.1139434  -0.8129134  -1.1139434  0.0  story  right  
+15  show hn : i created a website to compare online service security , need your help  story  -1.8986783  -3.4624586  -3.7338291  0.0  show_hn  wrong  
+16  keep your type small and your bug smaller  story  -0.4824996  -2.3567188  -2.9695404  0.0  story  right  
+17  what went down at wwdc  story  -0.3649805  -0.7533499  -2.5954294  0.0  story  right  
+18  home  story  -0.1139434  -0.8129134  -1.1139434  0.0  story  right  
+19  masonite 2.2 released ( a python web framework )  story  0.3290065  -1.0655015  -1.4149733  0.0  story  right  
+20  my product died because it got way too many user – here 's how  story  -0.1774296  -1.4990461  -2.1139434  0.0  story  right  
+21  what are tokio and async io all about  story  -0.5197534  -1.8386208  -4.3779455  0.0  story  right  
+22  fc : oral history of usb – why wasn’t the plug reversible ?  story  0.45389  -3.1644115  -4.2280735  0.0  story  right  
+23  what doe big tech know about you  story  -0.593393  -0.7661307  -4.0769155  0.0  story  right  
+24  amanda knox roar against wrongful imprisonment in her tearful return to italy  story  0.7574653  -0.9219695  -2.523871  0.0  story  right  
