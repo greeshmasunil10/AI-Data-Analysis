@@ -18,7 +18,7 @@ from nltk.corpus import stopwords
 start = time.time()
 lemmatizer = WordNetLemmatizer()
 filename="Resources\hn2018_2019.csv"
-filename="Resources\sample100.csv"
+filename="Resources\sample500.csv"
 smooth=0.5
 global wordlist
 
@@ -82,6 +82,16 @@ class Word:
             self.prob3=round((smooth+c)/(showcount+vocabsize*smooth),3)
         if(pollcount!=0 and d!=-1): 
             self.prob4=round((smooth+d)/(pollcount+vocabsize*smooth),3)
+            
+    def updatefreq(self): 
+        if(storycount!=0):
+            self.prob1=round((smooth+self.count1)/(storycount+vocabsize*smooth),3)
+        if(askcount!=0): 
+            self.prob2=round((smooth+self.count2)/(askcount+vocabsize*smooth),3)
+        if(showcount!=0): 
+            self.prob3=round((smooth+self.count3)/(showcount+vocabsize*smooth),3)
+        if(pollcount!=0): 
+            self.prob4=round((smooth+self.count4)/(pollcount+vocabsize*smooth),3)
             
     def disp(self):
         return(self.word+"  "+
@@ -174,8 +184,11 @@ def update_word_frequency(freq,post_type):
 #             print("\n",i,wordname, wordcount,end="")      
 #         i+=1    
 
-def removeStopwords(wordlist, stopwords):
-    return [w for w in wordlist if w not in stopwords]
+def update_freq():
+    global wordlist
+    for it in wordlist:
+        it.updatefreq()
+
 
 def test_data(wordlist,resfile):
     print("Testing Data...")
@@ -299,6 +312,7 @@ def remove_stopwords():
     
     return wordlist
 
+    
 def filterlength():
     global freq1,freq2,freq3,freq4,freq,storycount,askcount,showcount,pollcount
     global wordlist
@@ -317,8 +331,10 @@ def filterlength():
     for it in dict(freq):
         if len(it)<=2 or len(it)>=9:
             del freq[it]
-    wordlist=[w for w in wordlist if len(w.word)<=2 or len(w.word)>=9]
-                  
+    wordlist=[w for w in wordlist if len(w.word)>2 and len(w.word)<9]
+#     print("________________________________")
+#     for it in wordlist:
+#         print(it.word,len(it.word))
 
     storycount=len(freq1.values())
     askcount=len(freq2.values())
@@ -364,6 +380,7 @@ def startcode():
     print("word count:",storycount,askcount,showcount,pollcount)
     print("prior probabilities:",storyprior,askprior,showprior,pollprior)
     print("size:",vocabsize)
+    update_freq()
     test_data(stoplist,"Output\\stopword-result.txt")
     
     
@@ -373,6 +390,7 @@ def startcode():
     print("word count:",storycount,askcount,showcount,pollcount)
     print("prior probabilities:",storyprior,askprior,showprior,pollprior)
     print("size:",vocabsize)
+    update_freq()
     test_data(lis,"Output\\wordlength-result.txt")
 
     end = time.time()
