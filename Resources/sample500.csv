@@ -499,18 +499,27 @@
 2295132,16049148,Do you have good Tech Culture?,story,dundercoder,2018-01-02 1:27,https://surfingthe.cloud/tech-culture/,4,0
 2295133,16049162,Health Care Is Hemorrhaging Data. AI Is Here to Help,story,jonbaer,2018-01-02 1:29,https://www.wired.com/story/health-care-is-hemorrhaging-data-ai-is-here-to-help/,2,0
 2295134,16049167,Bitcoin and Blockchain Will Reveal What They're Actually Good for in 2018,story,jonbaer,2018-01-02 1:30,https://www.wired.com/story/future-of-bitcoin-blockchain-2018/,2,0
-2651947,19607915,Millions of Netflix users are using someone else password,story,hhs,2019-04-08 18:43,https://www.recode.net/2019/4/8/18300256/netflix-password-sharing-14-percent-survey-content-experience-moffettnathanson,5,1
-2651948,19607955,Nasa researchers catalogue all microbes and fungi on the ISS,story,maze-le,2019-04-08 18:47,https://www.eurekalert.org/pub_releases/2019-04/bc-nrc040319.php,1,0
-2651949,19607972,A MIT Crash Course on Hacker Tools,story,fiberbrb,2019-04-08 18:49,https://www.i-programmer.info/news/90-tools/12668-a-mit-crash-course-on-hacker-tools.html,2,1
-2651950,19607980,"Ask HN: Recommend a software release process for a small, agile team?",ask_hn,aklewenhagen,2019-04-08 18:50,,1,0
-2651951,19607984,YaCy Decentralized Web Search,story,droffel,2019-04-08 18:50,https://yacy.net/en/index.html,2,0
-2651952,19607995,Dockerized Ethereum Private Environment Compatible with MetaMask and Remix,story,wslh,2019-04-08 18:52,https://blog.coinfabrik.com/dockerized-ethereum-private-testing-environment-compatible-with-metamask-and-remix/,7,0
-2651953,19607996,"A Remarkable Rail Journey into the Horn of Africa Past, and Future",story,pseudolus,2019-04-08 18:52,https://www.nytimes.com/2019/04/08/travel/ethiopia-train-harar-addis-ababa.html,2,0
-2651954,19608006,Kegworth Air Disaster,story,brian-armstrong,2019-04-08 18:53,https://en.wikipedia.org/wiki/Kegworth_air_disaster,3,0
-2651955,19608009,Visualizing Recurrent Neural Networks,story,Permit,2019-04-08 18:54,http://joshvarty.github.io/VisualizingRNNs/,3,0
-2651956,19608027,"Mobile Lending App Branch Partners with Visa, Announces $170M in Funding",story,kaboro,2019-04-08 18:56,https://www.forbes.com/sites/sarahhansen/2019/04/07/mobile-lending-app-branch-partners-with-visa-announces-170-million-in-fresh-funding/,1,0
-2651957,19608040,The Strategic Independent,story,gk1,2019-04-08 18:57,https://tomcritchlow.com/2019/04/04/the-strategic-independent/,1,0
-2708677,20196083,"Show HN: I created a website to compare online service security, need your help",show_hn,fredrikaurdal,2019-06-16 15:54,,2,4
+2708663,20195954,Comet: Commonsense Transformers for Automatic Knowledge Graph Construction,story,sel1,2019-06-16 15:33,https://arxiv.org/abs/1906.05317,2,0
+2708664,20195958,Super Mario Royale,story,cyberfart,2019-06-16 15:33,http://www.infernoplus.com/royale/#game,3,1
+2708665,20195974,Airbnb Expands Experiences into Multiday Adventures,story,joeyespo,2019-06-16 15:36,https://skift.com/2019/06/13/airbnb-expands-experiences-into-multiday-adventures/,1,0
+2708666,20195991,Ask HN: Encryption and 5TB+ Backups,ask_hn,mmahut,2019-06-16 15:39,,2,3
+2708667,20195993,Retirees Might Run Out of Money 10 Years Before They Die,story,whack,2019-06-16 15:39,https://www.bloomberg.com/news/articles/2019-06-13/world-s-retirees-risk-running-out-of-money-a-decade-before-death,49,51
+2708668,20195994,Building a Single System Image Cluter with GNU/Hurd [pdf],story,jrepinc,2019-06-16 15:39,https://www.freesoft.org/software/hurd/building.pdf,3,0
 2708669,20196008,Ask HN: Graph Database with Visual Editor for personal use,ask_hn,acidicfaustine,2019-06-16 15:42,,1,1
-2708568,20195247,Ask HN: Good Articles on UX Design?,ask_hn,dvaloper,2019-06-16 13:02,,3,0
-2708508,20194775,Show HN: Machine Learning Experiments Organizer,show_hn,vpj,2019-06-16 10:07,https://github.com/vpj/lab,3,0
+2708670,20196015,Compositional generalization through meta sequence-to-sequence learning,story,sel1,2019-06-16 15:43,https://arxiv.org/abs/1906.05381,2,0
+2708671,20196027,Ultralisp: A fast-moving Common Lisp software distribution,story,lerax,2019-06-16 15:45,https://ultralisp.org/,74,19
+2708672,20196029,Public Posts Are Implicit Endorsement of the Framework They Discuss,story,CondensedBrain,2019-06-16 15:45,https://posts.emsenn.net/public-posts-are-implicit-endorsement-of-the-framework-they-discuss,1,0
+2708673,20196039,“Too Cheap to Meter”: A History of the Phrase (2016),story,dredmorbius,2019-06-16 15:46,https://public-blog.nrc-gateway.gov/2016/06/03/too-cheap-to-meter-a-history-of-the-phrase/,29,28
+2708674,20196055,Security Compliance at Cloudflare,story,sahin-boydas,2019-06-16 15:49,https://blog.cloudflare.com/security-compliance-at-cloudflare/,2,0
+2708675,20196061,Relearn CSS layout,story,aarohmankad,2019-06-16 15:49,https://every-layout.dev/,333,60
+2708676,20196082,Neural Arabic Question Answering,story,sel1,2019-06-16 15:53,https://arxiv.org/abs/1906.05394,1,0
+2708677,20196083,"Show HN: I created a website to compare online service security, need your help",show_hn,fredrikaurdal,2019-06-16 15:54,,2,4
+2708678,20196088,Keep your types small and your bugs smaller,story,oftenwrong,2019-06-16 15:54,https://www.parsonsmatt.org/2018/10/02/small_types.html,1,0
+2708679,20196094,What Went Down at WWDC,story,austin_kodra,2019-06-16 15:55,https://heartbeat.fritz.ai/what-went-down-at-wwdc-2019-12a8d59b2497,1,0
+2708680,20196101,Home,story,ccnetwoking,2019-06-16 15:56,https://novanbills.com/,1,0
+2708681,20196121,Masonite 2.2 Released (a Python web framework),story,eire1130,2019-06-16 16:01,https://www.reddit.com/r/Python/comments/c0wxb6/masonite_22_released_the_modern_python_web/,1,0
+2708682,20196136,My product died because it got way too many users – here's how,story,nubela,2019-06-16 16:03,https://nubela.co/blog/my-product-died-because-it-got-way-too-many-users-heres-how/,6,2
+2708683,20196140,What Are Tokio and Async IO All About,story,jinqueeny,2019-06-16 16:04,https://manishearth.github.io/blog/2018/01/10/whats-tokio-and-async-io-all-about/,2,0
+2708684,20196142,FC: Oral History of USB – Why Wasn’t the Plug Reversible?,story,protomyth,2019-06-16 16:04,http://lists.sigcis.org/pipermail/members-sigcis.org/2019-June/001538.html,1,0
+2708685,20196151,What Does Big Tech Know About You,story,mountainview,2019-06-16 16:06,https://www.pcmag.com/news/366327/what-does-big-tech-know-about-you-basically-everything,1,0
+2708686,20196158,Amanda Knox roars against wrongful imprisonment in her tearful return to Italy,story,dankohn1,2019-06-16 16:08,https://www.washingtonpost.com/world/2019/06/15/amanda-knox-tearful-return-italy-roars-against-wrongful-prosecution/,2,0

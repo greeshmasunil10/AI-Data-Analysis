@@ -35,7 +35,14 @@ def trainModel():
     cv = CountVectorizer()
     cv2= CountVectorizer()
     
-    counts = cv.fit_transform(dftrain['Title'])
+    counts = cv.fit_transform(dftrain[ (dftrain['PostType']==0) ]['Title'])
+    print(len(cv.vocabulary_))
+#     print(cv.vocabulary_.items())
+    
+    
+    print(counts.toarray())
+    print(cv.vocabulary_['top'])
+#     print(cv.vocabulary_.items())
     counts2= cv2.fit_transform(dftest['Title'])
 #     feat_dict=cv.vocabulary_.keys()
     transformer = TfidfTransformer().fit(counts)
@@ -47,7 +54,7 @@ def trainModel():
 #     print(len(cv.vocabulary_.keys()))
 #     print("featurenames")
 #     print(cv.get_feature_names())
-    print(cv.vocabulary_)
+#     print(cv.vocabulary_)
 #     print(cv)
 #     print(counts.shape)
 #     print(counts.toarray())
@@ -70,20 +77,20 @@ def trainModel():
 #     for k,v in counts.items():
 #         print(k,v)
 
-    X_train, X_test, y_train, y_test = train_test_split(counts, dftrain['Title'], test_size=0.1)
+#     X_train, X_test, y_train, y_test = train_test_split(counts, dftrain['Title'], test_size=0.1)
 #     X_train=dftrain
 #     y_train= dftrain.PostType.tolist()
 #     y_test= dftest.PostType.tolist()
 #     X_train= dftrain.Title.tolist()
 #     X_test=dftest.Title.tolist()
-    print("ytrain",y_train)
-    print("xtrain",X_train)
+#     print("ytrain",y_train)
+#     print("xtrain",X_train)
 #     y_train=dftrain['Title']
 # #     , X_test, y_train, y_test = train_test_split(counts, df['Title'], test_size=0.1, random_state=69)
-    model = MultinomialNB().fit(X_train, y_train)
-    print(model.predict_log_proba(X_train))
-    print("predicted...")
-    predicted = model.predict(X_test)
+#     model = MultinomialNB().fit(X_train, y_train)
+#     print(model.predict_log_proba(X_train))
+#     print("predicted...")
+#     predicted = model.predict(X_test)
 #     print(type(X_test))
 #     print(X_train)
 #     for it in model.predict_log_proba(X_train):
