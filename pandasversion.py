@@ -18,7 +18,7 @@ from nltk.corpus import stopwords
 start = time.time()
 lemmatizer = WordNetLemmatizer()
 filename="Resources\hn2018_2019.csv"
-filename="Resources\sample100.csv"
+filename="Resources\sample500.csv"
 smooth=0.5
 global wordlist
 
@@ -240,8 +240,8 @@ def test_data(wordlist,resfile):
                          label+"  "+
                          '\n')                   
                 
-#     print(round(c/(c+f)*100,2),"success!")        
-#     print(round(f/(c+f)*100,2),"failure!")        
+    print(round(c/(c+f)*100,2),"success!")        
+    print(round(f/(c+f)*100,2),"failure!")        
 
 def remove_stopwords():
     stopwords = []
