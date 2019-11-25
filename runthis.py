@@ -114,8 +114,7 @@ class Word:
                str(self.count4)+"  "+
                str(self.prob4))
 
-def tokenise_model(df):  
-#     df['PostType'] = df.PostType.map({'story': 0, 'ask_hn': 1, 'show_hn':2, 'post':3})
+def preprocess_model(df):  
     df['Title'] = df.Title.map(lambda x: x.lower())
     df['Title'] = df.Title.str.replace('[^\w\s]', '')
     df['Title'] = df['Title'].apply(nltk.word_tokenize)
@@ -130,7 +129,7 @@ def train_data():
     df =pd.read_csv(filename,encoding='ISO-8859-1')
     print("\nProcessing data..")
     df = df[(df['Created At']<'2019')]
-    df= tokenise_model(df)
+    df= preprocess_model(df)
     df[(df['Post Type']=='story')]['Title'].apply(lambda x: [freq1.update(x.split())])
     df[(df['Post Type']=='ask_hn')]['Title'].apply(lambda x: [freq2.update(x.split())])
     df[(df['Post Type']=='show_hn')]['Title'].apply(lambda x: [freq3.update(x.split())])
@@ -154,17 +153,19 @@ def train_data():
 
     print("Saving Model to file..")
     f = open("Output\model-2018.txt", "w",encoding='ISO-8859-1')
+    f2 = open("Output\\vocabulary.txt", "w",encoding='ISO-8859-1')
     wordlist = sorted(wordlist, key=lambda x: x.word, reverse=False)
     i=0
     for w in wordlist:
         i+=1
         f.write(str(i)+'  '+w.disp()+'\n')  
+        f2.write(w.word+'\n')
     f.close()  
+    f2.close()  
 
 def update_word_frequency(freq,post_type):
     global stopwords
     for wordname, wordcount in dict(freq).items():
-#         if(wordname not in stopwords):
             word1=next((x for x in wordlist if x.word == wordname), None)
             if(word1==None):
                 word1 = Word(wordname)
@@ -205,7 +206,6 @@ def test_data(wordlist,resfile):
             words=title.split()
             global storyprior,showprior,askprior,pollprior
             storyscore= askscore = showscore= pollscore=0.0
-#             print([storyprior,askprior,showprior,pollprior])
             if(storyprior!=0):storyscore=math.log(storyprior,10)
             if(askprior!=0):askscore=math.log(askprior,10)
             if(showprior!=0):showscore=math.log(showprior,10)
