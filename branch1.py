@@ -18,7 +18,7 @@ from nltk.corpus import stopwords
 start = time.time()
 lemmatizer = WordNetLemmatizer()
 filename="Resources\hn2018_2019.csv"
-filename="Resources\sample500.csv"
+filename="Resources\sample100.csv"
 smooth=0.5
 global wordlist
 
@@ -363,6 +363,58 @@ def filterlength():
     
     return wordlist
 
+def freqfilter(n):
+    global freq1,freq2,freq3,freq4,freq,storycount,askcount,showcount,pollcount
+    global wordlist
+    for it,ik in dict(freq1).items():
+        if ik<=n:
+            del freq1[it]
+    for it,ik in dict(freq2).items():
+        if ik<=n:
+            del freq2[it]
+    for it,ik in dict(freq3).items():
+        if ik<=n:
+            del freq3[it]
+    for it,ik in dict(freq4).items():
+        if ik<=n:
+            del freq4[it]
+    for it,ik in dict(freq).items():
+        if ik<=n:
+            del freq[it]
+    
+    wordlist=[w for w in wordlist if w.count1>n or w.count2>n
+              or w.count3>n or w.count4>n]
+#     print("________________________________")
+#     for it in wordlist:
+#         print(it.word,len(it.word))
+
+    storycount=len(freq1.values())
+    askcount=len(freq2.values())
+    showcount=len(freq3.values())
+    pollcount=len(freq4.values())
+    global vocabsize
+    vocabsize=len(freq.values())
+    global storyprior,askprior,showprior,pollprior
+    storyprior=storycount/vocabsize
+    askprior=askcount/vocabsize
+    showprior=showcount/vocabsize
+    pollprior=pollcount/vocabsize
+    
+    f = open("Output\wordlength-model.txt", "w",encoding='ISO-8859-1')
+    wordlist = sorted(wordlist, key=lambda x: x.word, reverse=False)
+    print("total no of words:",vocabsize)
+    i=0
+    for w in wordlist:
+#     try:
+        i+=1
+        f.write(str(i)+'  '+w.disp()+'\n')  
+#         print((str(i)+'  '+w.disp()))
+#     except:
+#         continue
+    f.close()
+    
+    return wordlist
+
 def startcode():
     print("Processing data...")
     train_data()
@@ -398,6 +450,21 @@ def startcode():
 #     os.system("notepad.exe Output\\model-2018.txt")
 #     os.system("notepad.exe Output\\baseline-result.txt")
     print("End of Process!")
+    print(len(wordlist))
 
-startcode()
+def gradualtest():
+    train_data()
+    freqfilter(2)
+    update_freq()
+    global wordlist
+    print("size:",vocabsize)
+    print("word count:",storycount,askcount,showcount,pollcount)
+    print("prior probabilities:",storyprior,askprior,showprior,pollprior)
+    print("size:",vocabsize)
+    test_data(wordlist, "Output\\freqfilterres.txt")
+    print(len(wordlist))
+    
+     
+# startcode()
+gradualtest()
 
