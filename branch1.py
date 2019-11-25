@@ -173,6 +173,7 @@ def removeStopwords(wordlist, stopwords):
     return [w for w in wordlist if w not in stopwords]
 
 def test_data(wordlist,resfile):
+    print("Testing Data...")
     c=0
     f=0
     k=0
@@ -200,12 +201,14 @@ def test_data(wordlist,resfile):
 #                     listt=[checkword.prob1,checkword.prob2,checkword.prob3,checkword.prob4]
 #                     print("found",word1,listt)
 #                     print(word1,listt.index(max(listt)),max(listt))
-                    
+#                 print(word1,[checkword.prob1,checkword.prob2,checkword.prob3,checkword.prob4])    
                 if(checkword.prob1!=0):storyscore+= math.log(checkword.prob1,10)
                 if(checkword.prob2!=0):askscore+= math.log(checkword.prob2,10)
                 if(checkword.prob3!=0):showscore+= math.log(checkword.prob3,10)
                 if(checkword.prob4!=0):pollscore+= math.log(checkword.prob4,10)
-            check=[storyscore,askscore,showscore,pollscore]    
+                
+            check=[storyscore,askscore,showscore,pollscore]  
+              
             check=list(filter(lambda a: a != 0, check) )   
             if(check.index(max(check))==0):
                 res="story"
@@ -237,8 +240,8 @@ def test_data(wordlist,resfile):
                          label+"  "+
                          '\n')                   
                 
-    print(round(c/(c+f)*100,2),"success!")        
-    print(round(f/(c+f)*100,2),"failure!")        
+#     print(round(c/(c+f)*100,2),"success!")        
+#     print(round(f/(c+f)*100,2),"failure!")        
 
 def remove_stopwords():
     stopwords = []
@@ -253,6 +256,8 @@ def remove_stopwords():
 #         except: continue    
 #     print(w.word for w in lis)
     return lis
+
+
 
 global stopwords
 stopwords = []
