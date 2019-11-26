@@ -17,6 +17,9 @@ from nltk.corpus import stopwords
 from builtins import input
 import matplotlib.pyplot as plt
 import matplotlib.pyplot as plt2
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics.classification import accuracy_score, recall_score,\
+    precision_score, f1_score
                                       
 
 lemmatizer = WordNetLemmatizer()
@@ -218,6 +221,8 @@ def test_data(wordlist,resfile):
     c=0
     f=0
     k=0
+    y_true=[]
+    y_pred=[]
     f1 = open(resfile, "w",encoding='ISO-8859-1')
 #     df = df[(df['Created At']>='2019')]
     df= preprocess_model(df)
@@ -266,6 +271,10 @@ def test_data(wordlist,resfile):
             else:
                 label="wrong"
                 f+=1  
+            y_true.append(df['Post Type'][i])
+            y_pred.append(res)
+            
+            
             k+=1
             f1.write(str(k)+'  '+title+"  "+
                          res+"  "+
@@ -276,8 +285,17 @@ def test_data(wordlist,resfile):
                          df['Post Type'][i]+"  "+
                          label+"  "+
                          '\n')                   
-                
-    print(str(round(c/(c+f)*100,2))+"%","accurate!") 
+    
+#     print(y_true)
+#     print(y_pred)            
+    print("confusion matrix:-\n",confusion_matrix(y_true, y_pred))
+    tn, fp, fn, tp = confusion_matrix([0, 1, 0, 1], [1, 1, 1, 0]).ravel()
+    print("tn,fp,fn,tp :",tn, fp, fn, tp)
+    print("Accuracy:",accuracy_score(y_true, y_pred))
+    print("Precision:", precision_score(y_true, y_pred, average='micro') )
+    print("Recall:", recall_score(y_true, y_pred, average='macro')  )
+    print("F1 measure:", f1_score(y_true, y_pred, average='micro')  )
+    print("This model is ",str(round(c/(c+f)*100,2))+"%","accurate") 
     return round(c/(c+f)*100,2)       
 # ''' 
 # This performs the functions for testing after removing stop words
