@@ -18,7 +18,7 @@ from builtins import input
 import matplotlib.pyplot as plt
 import matplotlib.pyplot as plt2
                                       
-start = time.time()
+
 lemmatizer = WordNetLemmatizer()
 filename="Resources\hn2018_2019.csv"
 filename="Resources\sample100.csv"
@@ -455,6 +455,8 @@ def baseline():
     
 #     os.system("notepad.exe Output\\model-2018.txt")
 #     os.system("notepad.exe Output\\baseline-result.txt")
+    end = time.time()
+    print("\nTotal elapsed time:",round(end - start,1),"seconds")
     print(len(wordlist))
     
     
@@ -487,6 +489,8 @@ def gradualfreq():
         y.append(val)
         createmodelfile("Output\\frequency_filter_output\\gradual_freq_"+str(i)+"_model-2018.txt")
         print("Vocabulary size:",vocabsize)
+    end = time.time()
+    print("\nTotal elapsed time:",round(end - start,1),"seconds")    
     plt2.plot(x,y) 
     plt2.ylabel('Performance')
     plt2.xlabel('Frequency')
@@ -524,6 +528,8 @@ def gradualsmooth():
         y.append(val)
         createmodelfile("Output\\smooth_filter_output\\gradual_smooth_"+str(i)+"_model-2018.txt")
         print("Vocabulary size:",vocabsize)
+    end = time.time()
+    print("\nTotal elapsed time:",round(end - start,1),"seconds")
     plt.plot(x, y)  
     plt.ylabel('Performance')
     plt.xlabel('smooth value')
@@ -536,13 +542,12 @@ def gradualsmooth():
 filename="Resources\\sample"+input("Enter input file:")+".csv"    
 print(filename)
 ch= input('1.Stop word, word filter \n2.Gradual smooth filter\n3.Gradual frequency filter\n Enter option:')
-
+start = time.time()
 if(ch=="1"):
     baseline()
 if(ch=="2"):
     gradualsmooth()
 if(ch=="3"):
     gradualfreq()
-end = time.time()
-print("\nTotal elapsed time:",round(end - start,1),"seconds")
+
 
