@@ -20,6 +20,7 @@ import matplotlib.pyplot as plt2
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics.classification import accuracy_score, recall_score,\
     precision_score, f1_score
+from test.test_lzma import INPUT
                                       
 
 lemmatizer = WordNetLemmatizer()
@@ -216,6 +217,7 @@ def update_smooth(val):
 # Predicts the Post Type based on score
 # '''
 def test_data(wordlist,resfile):
+    print("--------------------------------------------------------")     
     print("Testing Data...")
     df =pd.read_csv(filename,encoding='ISO-8859-1')
     c=0
@@ -287,7 +289,9 @@ def test_data(wordlist,resfile):
                          '\n')                   
     
 #     print(y_true)
-#     print(y_pred)            
+#     print(y_pred) 
+    print("--------------------------------------------------------")     
+    print('Results')     
     print("confusion matrix:-\n",confusion_matrix(y_true, y_pred))
     tn, fp, fn, tp = confusion_matrix([0, 1, 0, 1], [1, 1, 1, 0]).ravel()
     print("tn,fp,fn,tp :",tn, fp, fn, tp)
@@ -296,6 +300,7 @@ def test_data(wordlist,resfile):
     print("Recall:", recall_score(y_true, y_pred, average='macro')  )
     print("F1 measure:", f1_score(y_true, y_pred, average='micro')  )
     print("This model is ",str(round(c/(c+f)*100,2))+"%","accurate") 
+    print("--------------------------------------------------------")     
     return round(c/(c+f)*100,2)       
 # ''' 
 # This performs the functions for testing after removing stop words
@@ -442,40 +447,52 @@ def freqfilter(n):
     return wordlist
 
 def baseline():
+    global start
+    print("--------------------------------------------------------")     
+    print("Baseline model")
     train_data()
-    print(1/vocabsize)
+    print("--------------------------------------------------------")     
     print("word count:",storycount,askcount,showcount,pollcount)
-    print("prior probabilities:",storyprior,askprior,showprior,pollprior)
+    print("Vocabulary size:",vocabsize)
+    print("--------------------------------------------------------")     
     print("Check file for output..\n")
     test_data(wordlist,"Output\\baseline-result.txt")
-    
+    print("\nTotal elapsed time:",round(time.time() - start,1),"seconds")
+    print("--------------------------------------------------------")     
 #     '''
 #     Evaulates again after removing stop words
-#     '''    
-    print("\nTrying again with stop words...")
+#     '''
+    
+    input("Press any key to remove stop words")    
+    start= time.time()
+    print("--------------------------------------------------------")     
+    print("\n\nTrying again with stop words...\n")
+    print("--------------------------------------------------------")     
     stoplist=remove_stopwords()
-    print("prior probabilities:",storyprior,askprior,showprior,pollprior)
+    print("word count:",storycount,askcount,showcount,pollcount)
     print("Vocabulary size:",vocabsize)
     update_freq()
     test_data(stoplist,"Output\\stopword-result.txt")
+    print("\nTotal elapsed time:",round(time.time() - start,1),"seconds")
+    print("--------------------------------------------------------")     
     
 #     '''
 #     Evaulates again after filtering length
 #     '''     
-    print("\nTrying again with length filter...")
+    input("Press any key to filter length")    
+    start= time.time()
+    print("--------------------------------------------------------")     
+    print("\n\nTrying again with length filter...\n")
+    print("--------------------------------------------------------")     
     lis=filterlength()
     print("word count:",storycount,askcount,showcount,pollcount)
-    print("prior probabilities:",storyprior,askprior,showprior,pollprior)
-    print(" Vocabulary size:",vocabsize)
+    print("Vocabulary size:",vocabsize)
     update_freq()
     test_data(lis,"Output\\wordlength-result.txt")
-
-    
 #     os.system("notepad.exe Output\\model-2018.txt")
 #     os.system("notepad.exe Output\\baseline-result.txt")
     end = time.time()
     print("\nTotal elapsed time:",round(end - start,1),"seconds")
-    print(len(wordlist))
     
     
 # ''' 
@@ -490,11 +507,13 @@ def gradualfreq():
     update_freq()
     x=[]
     y=[]
+    print("\n-------------------------------------------------------")        
     print("freq filter value:",1)
     val=test_data(wordlist, "Output\\frequency_filter_output\\smoothfilter_1_result.txt")
     x.append(1)
     y.append(val)
     print("Vocabulary size:",vocabsize)
+    print("-------------------------------------------------------")        
     createmodelfile("Output\\frequency_filter_output\\gradual_freq_1_model-2018.txt")
     for i in range(1, 5):
         i=i*5
@@ -502,11 +521,13 @@ def gradualfreq():
         print()
         freqfilter(i)
         update_freq()
+        print("\n-------------------------------------------------------")     
         print("Freq filter value:",i)
         val=test_data(wordlist, "Output\\frequency_filter_output\\smoothfilter_"+str(i)+"_result.txt")
         y.append(val)
         createmodelfile("Output\\frequency_filter_output\\gradual_freq_"+str(i)+"_model-2018.txt")
         print("Vocabulary size:",vocabsize)
+        print("-------------------------------------------------------")     
     end = time.time()
     print("\nTotal elapsed time:",round(end - start,1),"seconds")    
     plt2.plot(x,y) 
@@ -541,11 +562,12 @@ def gradualsmooth():
         x.append(i)
         print()
         update_smooth(i)
+        print("\n\n--------------------------------------------------------")     
         print("smooth value:",i)
         val=test_data(wordlist, "Output\\smooth_filter_output\\smoothfilter_"+str(i)+"_result_.txt")
         y.append(val)
         createmodelfile("Output\\smooth_filter_output\\gradual_smooth_"+str(i)+"_model-2018.txt")
-        print("Vocabulary size:",vocabsize)
+        print("--------------------------------------------------------")     
     end = time.time()
     print("\nTotal elapsed time:",round(end - start,1),"seconds")
     plt.plot(x, y)  
