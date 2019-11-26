@@ -33,6 +33,15 @@ freq4 = Counter()
 freq = Counter()
 global df
 
+# '''
+# The class word is used for easy storage of probability and frequency information
+# of each word in the vocabulary
+# General notation: 1-story 2-ask_hn 3-show_hn 4-poll
+# This helps in easy retrieval of probabilities in testing stage
+# word class Member functions help to update frequencies in experiments stage
+# prob1,prob2,prob3,prob4 are the smoothed conditional probabilities
+# the list of words objects in vocabulary is stored in 'wordlist'
+# '''
 class Word:
     word=""
     count1 =0
@@ -54,20 +63,7 @@ class Word:
         if(askcount!=0):self.prob2=round(smooth/(askcount+vocabsize*smooth),7)
         if(showcount!=0):self.prob3=round(smooth/(showcount+vocabsize*smooth),7)
         if(pollcount!=0):self.prob4=round(smooth/(pollcount+vocabsize*smooth),7)
-        
-    def getword(self):
-        return Word
-        
-    def getprob(self,a):
-        if(a==1):
-            return self.prob1
-        if(a==2):
-            return self.prob2
-        if(a==3):
-            return self.prob3
-        return self.prob4
-        
-
+            
     def setfreq(self,t,b,c,d):
         smooth=0.5
         if(t!=-1): self.count1=t   
@@ -116,6 +112,10 @@ class Word:
                str(self.count4)+"  "+
                str(self.prob4))
 
+# ''' 
+# This function does all preprocessing at once returns the data frame as whole.
+# This is usefull since it is used for both training and testing model
+# '''
 def preprocess_model(df):  
     df['Title'] = df.Title.map(lambda x: x.lower())
     df['Title'] = df.Title.str.replace('[^\w\s]', '')
@@ -125,6 +125,14 @@ def preprocess_model(df):
     df['Title'] = df['Title'].apply(lambda x: ' '.join(x))
     return df
 
+# '''
+# List comprehension statements is used for better perfomance
+# I have also reduced memory footprint in most statements for better speed
+# storyprior, askprior,showprior,pollprior and the prior probabilities of each class
+# 
+# The frequencies ore calculated for each class
+# The vocabulary size of each class and total vocabulary size is calculated here
+# '''
 def train_data():
     global wordlist, storycount, askcount,showcount,pollcount, freq1,freq2,freq3,freq4,freq
     global storyprior,askprior,showprior,pollprior, vocabsize
@@ -165,6 +173,9 @@ def train_data():
     f.close()  
     f2.close()  
 
+# '''
+# This update the frequencies and probabilities to the word-class
+# '''
 def update_word_frequency(freq,post_type):
     global stopwords
     for wordname, wordcount in dict(freq).items():
@@ -185,6 +196,7 @@ def update_word_frequency(freq,post_type):
                 wordlist.append(word1)
                 wordchecklist.append(wordname)  
 
+
 def update_freq():
     global wordlist
     for it in wordlist:
@@ -195,6 +207,11 @@ def update_smooth(val):
         it.updatesmooth(val)
 
 
+# '''
+# This calculates the score for each class
+# score is stored in storyscore,askcore,showscore and pollscore.
+# Predicts the Post Type based on score
+# '''
 def test_data(wordlist,resfile):
     print("Testing Data...")
     df =pd.read_csv(filename,encoding='ISO-8859-1')
@@ -202,9 +219,12 @@ def test_data(wordlist,resfile):
     f=0
     k=0
     f1 = open(resfile, "w",encoding='ISO-8859-1')
+#     df = df[(df['Created At']>='2019')]
+    df= preprocess_model(df)
     for i in range(df.shape[0]):
         if(df['Created At'][i][0:4]=='2019'):
-            title = ' '.join([lemmatizer.lemmatize(w) for w in nltk.word_tokenize(df['Title'][i].lower())])
+#             title = ' '.join([lemmatizer.lemmatize(w) for w in nltk.word_tokenize(df['Title'][i].lower())])
+            title= df['Title'][i]
             words=title.split()
             global storyprior,showprior,askprior,pollprior
             storyscore= askscore = showscore= pollscore=0.0
@@ -259,7 +279,11 @@ def test_data(wordlist,resfile):
                 
     print(str(round(c/(c+f)*100,2))+"%","accurate!") 
     return round(c/(c+f)*100,2)       
-
+# ''' 
+# This performs the functions for testing after removing stop words
+# Removes words from wordlist that are in stop list
+# updates frequencies and probabilities s
+# '''
 def remove_stopwords():
     stopwords = []
     global freq1,freq2,freq3,freq4,freq,storycount,askcount,showcount,pollcount
@@ -272,7 +296,7 @@ def remove_stopwords():
         if it in dict(freq1):
             del freq1[it]
     for it in stopwords:
-        if it in dict(freq2):
+        if it in dict(freq2): 
             del freq2[it]
     for it in stopwords:
         if it in dict(freq3):
@@ -305,7 +329,11 @@ def remove_stopwords():
     
     return wordlist
 
-    
+# ''' 
+# This performs the functions for testing after filtering length
+# Remove words from wordlist after filtering
+# updates frequencies and probabilities 
+# '''   
 def filterlength():
     global freq1,freq2,freq3,freq4,freq,storycount,askcount,showcount,pollcount
     global wordlist
@@ -347,6 +375,11 @@ def filterlength():
     
     return wordlist
 
+# ''' 
+# This performs the functions for testing after filtering length
+# Remove words from wordlist after removing infrequent words
+# updates frequencies and probabilities 
+# ''' 
 def freqfilter(n):
     global freq1,freq2,freq3,freq4,freq,storycount,askcount,showcount,pollcount
     global wordlist
@@ -384,23 +417,23 @@ def freqfilter(n):
     wordlist = sorted(wordlist, key=lambda x: x.word, reverse=False)
     i=0
     for w in wordlist:
-#     try:
         i+=1
         f.write(str(i)+'  '+w.disp()+'\n')  
     f.close()
     
     return wordlist
 
-def regularmodel():
+def baseline():
     train_data()
     print(1/vocabsize)
     print("word count:",storycount,askcount,showcount,pollcount)
     print("prior probabilities:",storyprior,askprior,showprior,pollprior)
     print("Check file for output..\n")
-#     print(freq)
     test_data(wordlist,"Output\\baseline-result.txt")
     
-    
+#     '''
+#     Evaulates again after removing stop words
+#     '''    
     print("\nTrying again with stop words...")
     stoplist=remove_stopwords()
     print("prior probabilities:",storyprior,askprior,showprior,pollprior)
@@ -408,7 +441,9 @@ def regularmodel():
     update_freq()
     test_data(stoplist,"Output\\stopword-result.txt")
     
-    
+#     '''
+#     Evaulates again after filtering length
+#     '''     
     print("\nTrying again with length filter...")
     lis=filterlength()
     print("word count:",storycount,askcount,showcount,pollcount)
@@ -421,7 +456,12 @@ def regularmodel():
 #     os.system("notepad.exe Output\\model-2018.txt")
 #     os.system("notepad.exe Output\\baseline-result.txt")
     print(len(wordlist))
-
+    
+    
+# ''' 
+# This performs experiments with the testing by gradually in filtering the word
+# frequencies
+# ''' 
 def gradualfreq():
     global wordlist
     train_data()
@@ -451,7 +491,10 @@ def gradualfreq():
     plt2.ylabel('Performance')
     plt2.xlabel('Frequency')
     plt2.show()
-    
+   
+# ''' 
+# Saves model into text file
+# '''     
 def createmodelfile(filename):
     global wordlist
     f = open(filename, "w",encoding='ISO-8859-1')
@@ -461,7 +504,11 @@ def createmodelfile(filename):
         i+=1
         f.write(str(i)+'  '+w.disp()+'\n')  
     f.close() 
-        
+
+# ''' 
+# This performs experiments with the testing by gradually changing the smoothing value
+# frequencies
+# '''         
 def gradualsmooth():
     global wordlist
     train_data()
@@ -482,13 +529,16 @@ def gradualsmooth():
     plt.xlabel('smooth value')
     plt.show()  
 
-    
+
+# ''' 
+# User interface
+# '''     
 filename="Resources\\sample"+input("Enter input file:")+".csv"    
 print(filename)
 ch= input('1.Stop word, word filter \n2.Gradual smooth filter\n3.Gradual frequency filter\n Enter option:')
 
 if(ch=="1"):
-    regularmodel()
+    baseline()
 if(ch=="2"):
     gradualsmooth()
 if(ch=="3"):
