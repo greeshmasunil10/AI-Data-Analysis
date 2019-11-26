@@ -104,17 +104,29 @@ class Word:
             self.prob3=round((smooth+self.count3)/(showcount+vocabsize*smooth),3)
         if(pollcount!=0): 
             self.prob4=round((smooth+self.count4)/(pollcount+vocabsize*smooth),3)
-            
+#    Used for writing the model into text file         
     def disp(self):
+        a=self.prob1
+        if(self.prob1!=0):
+            a=math.log(self.prob1,10)
+        b=self.prob2
+        if(self.prob2!=0):
+            b=math.log(self.prob2,10)
+        c=self.prob3
+        if(self.prob2!=0):
+            c=math.log(self.prob3,10)
+        d=self.prob4
+        if(self.prob4!=0):
+            d=math.log(self.prob4,10)
         return(self.word+"  "+
                str(self.count1)+"  "+
-               str(self.prob1)+"  "+
+               str(a)+"  "+
                str(self.count2) +"  "+
-               str(self.prob2)+"  "+
+               str(b)+"  "+
                str(self.count3)+"  "+
-               str(self.prob3)+"  "+
+               str(c)+"  "+
                str(self.count4)+"  "+
-               str(self.prob4))
+               str(d))
 
 # ''' 
 # This function does all preprocessing at once returns the data frame as whole.
@@ -531,8 +543,8 @@ def gradualfreq():
     end = time.time()
     print("\nTotal elapsed time:",round(end - start,1),"seconds")    
     plt2.plot(x,y) 
-    plt2.ylabel('Performance')
-    plt2.xlabel('Frequency')
+    plt2.ylabel('Accuracy(%)')
+    plt2.xlabel('Frequency thresh-hold')
     plt2.show()
    
 # ''' 
@@ -571,17 +583,17 @@ def gradualsmooth():
     end = time.time()
     print("\nTotal elapsed time:",round(end - start,1),"seconds")
     plt.plot(x, y)  
-    plt.ylabel('Performance')
-    plt.xlabel('smooth value')
+    plt.ylabel('Accuracy (%)')
+    plt.xlabel('Smoothing value')
     plt.show()  
 
 
 # ''' 
 # User interface
 # '''     
-filename="Resources\\sample"+input("Enter input file:")+".csv"    
+filename="Resources\\"+input("Enter Input file name located in Resource folder\n(eg.sample, no need to type .csv):")+".csv"    
 print(filename)
-ch= input('1.Stop word, word filter \n2.Gradual smooth filter\n3.Gradual frequency filter\n Enter option:')
+ch= input('1.Basemodel, Stop word, word filter \n2.Gradual smooth filter\n3.Gradual frequency filter\n Enter option:')
 start = time.time()
 if(ch=="1"):
     baseline()
