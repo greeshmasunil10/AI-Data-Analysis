@@ -1,39 +1,39 @@
-1  million of netflix user are using someone else password  story  -4.4369009  -5.2287534  -5.8840589  0.0  story  right  
-2  nasa researcher catalogue all microbe and fungi on the i  ask_hn  -8.9986977  -8.9223284  -10.1938628  0.0  story  wrong  
-3  a mit crash course on hacker tool  story  -9.6007577  -9.8485422  -10.9298164  0.0  story  right  
-4  ask hn recommend a software release process for a small agile team  ask_hn  -13.8683639  -10.8238923  -14.3321212  0.0  ask_hn  right  
-5  yacy decentralized web search  ask_hn  -2.8840589  -2.7850559  -2.9932034  0.0  story  wrong  
-6  dockerized ethereum private environment compatible with metamask and remix  story  -4.5038477  -5.4840259  -5.5160821  0.0  story  right  
-7  a remarkable rail journey into the horn of africa past and future  story  -7.3754484  -9.4506022  -10.1938628  0.0  story  right  
-8  kegworth air disaster  story  -2.3399909  -3.1829959  -3.3611802  0.0  story  right  
-9  visualizing recurrent neural network  story  -2.5830289  -3.1829959  -3.3611802  0.0  story  right  
-10  mobile lending app branch partner with visa announces 170m in funding  story  -1.9063353  -2.1416032  -2.9932034  0.0  story  right  
-11  the strategic independent  story  -1.6799389  -2.5297834  -2.9932034  0.0  story  right  
-12  show hn i created a website to compare online service security need your help  ask_hn  -16.6184865  -14.8908391  -15.6041366  0.0  show_hn  wrong  
-13  ask hn graph database with visual editor for personal use  ask_hn  -7.3277564  -4.6812248  -6.763485  0.0  ask_hn  right  
-14  ask hn good article on ux design  ask_hn  -7.9809689  -4.9311023  -7.3277564  0.0  ask_hn  right  
-15  show hn machine learning experiment organizer  show_hn  -7.6799389  -7.0826254  -6.2485752  0.0  show_hn  right  
-16  comet commonsense transformer for automatic knowledge graph construction  story  -2.2308464  -2.2799059  -2.7969087  0.0  story  right  
-17  super mario royale  story  -0.1850889  -0.4840259  -0.8383014  0.0  story  right  
-18  airbnb expands experience into multiday adventure  story  -0.1850889  -0.4840259  -0.8383014  0.0  story  right  
-19  ask hn encryption and 5tb backup  ask_hn  -7.2028177  -5.1863748  -6.9597796  0.0  ask_hn  right  
-20  retiree might run out of money 10 year before they die  story  -9.2907729  -9.9734809  -10.9298164  0.0  story  right  
-21  building a single system image cluter with gnuhurd pdf  story  -4.8048777  -5.1038147  -5.5160821  0.0  story  right  
-22  ask hn graph database with visual editor for personal use  ask_hn  -7.3277564  -4.6812248  -6.763485  0.0  ask_hn  right  
-23  compositional generalization through meta sequencetosequence learning  story  -2.5830289  -3.1829959  -3.3611802  0.0  story  right  
-24  ultralisp a fastmoving common lisp software distribution  ask_hn  -4.8048777  -4.7058747  -5.8840589  0.0  story  wrong  
-25  public post are implicit endorsement of the framework they discus  story  -8.6307209  -9.5755409  -10.5618396  0.0  story  right  
-26  âtoo cheap to meterâ a history of the phrase 2016  story  -7.0744184  -8.9454522  -10.1938628  0.0  story  right  
-27  security compliance at cloudflare  story  -2.5830289  -2.7850559  -3.3611802  0.0  story  right  
-28  relearn cs layout  story  -0.1850889  -0.4840259  -0.8383014  0.0  story  right  
-29  neural arabic question answering  story  -0.1850889  -0.4840259  -0.8383014  0.0  story  right  
-30  show hn i created a website to compare online service security need your help  ask_hn  -16.6184865  -14.8908391  -15.6041366  0.0  show_hn  wrong  
-31  keep your type small and your bug smaller  ask_hn  -6.9017877  -6.8765709  -8.0389609  0.0  story  wrong  
-32  what went down at wwdc  ask_hn  -5.2819989  -4.4426332  -5.8840589  0.0  story  wrong  
-33  home  story  -0.1850889  -0.4840259  -0.8383014  0.0  story  right  
-34  masonite 22 released a python web framework  story  -9.6587496  -9.7058747  -10.5618396  0.0  story  right  
-35  my product died because it got way too many user â here how  story  -11.4034771  -12.2745109  -12.7167416  0.0  story  right  
-36  what are tokio and async io all about  ask_hn  -7.2028177  -6.4883907  -8.0389609  0.0  story  wrong  
-37  fc oral history of usb â why wasnât the plug reversible  story  -5.5795684  -7.9277234  -7.6709841  0.0  story  right  
-38  what doe big tech know about you  ask_hn  -5.0389609  -3.7991806  -5.8840589  0.0  story  wrong  
-39  amanda knox roar against wrongful imprisonment in her tearful return to italy  story  -3.5261241  -3.9374833  -5.1481054  0.0  story  right  
+1  million of netflix user are using someone else password  story  -9.3312967  -11.902916  -11.8312227  0.0  story  right  
+2  nasa researcher catalogue all microbe and fungi on the i  story  -8.2178176  -9.7445535  -11.0353427  0.0  story  right  
+3  a mit crash course on hacker tool  story  -9.3927492  -10.9486734  -11.8312227  0.0  story  right  
+4  ask hn recommend a software release process for a small agile team  ask_hn  -14.0917192  -11.8036138  -15.5301927  0.0  ask_hn  right  
+5  yacy decentralized web search  story  -5.7906892  -6.0790072  -6.0353427  0.0  story  right  
+6  dockerized ethereum private environment compatible with metamask and remix  story  -6.6701153  -9.0790072  -8.7343127  0.0  story  right  
+7  a remarkable rail journey into the horn of africa past and future  story  -6.8656351  -10.3466135  -11.0353427  0.0  story  right  
+8  kegworth air disaster  story  -2.4896592  -3.6810672  -3.7343127  0.0  story  right  
+9  visualizing recurrent neural network  story  -2.4896592  -3.6810672  -3.7343127  0.0  story  right  
+10  mobile lending app branch partner with visa announces 170m in funding  story  -6.3892886  -8.4769472  -8.7343127  0.0  story  right  
+11  the strategic independent  story  -1.5602403  -2.902916  -3.3363727  0.0  story  right  
+12  show hn i created a website to compare online service security need your help  ask_hn  -16.4896592  -16.4663717  -16.9384327  0.0  show_hn  wrong  
+13  ask hn graph database with visual editor for personal use  ask_hn  -9.808418  -8.3141589  -10.1322527  0.0  ask_hn  right  
+14  ask hn good article on ux design  ask_hn  -8.0917192  -5.5774003  -8.0353427  0.0  ask_hn  right  
+15  show hn machine learning experiment organizer  show_hn  -10.5865692  -11.0183094  -9.6374027  0.0  show_hn  right  
+16  comet commonsense transformer for automatic knowledge graph construction  story  -2.1886292  -2.6396745  -3.1322527  0.0  story  right  
+17  super mario royale  story  -0.0917192  -0.6810672  -1.0353427  0.0  story  right  
+18  airbnb expands experience into multiday adventure  story  -0.0917192  -0.6810672  -1.0353427  0.0  story  right  
+19  ask hn encryption and 5tb backup  ask_hn  -10.4482665  -8.7534916  -10.3363727  0.0  ask_hn  right  
+20  retiree might run out of money 10 year before they die  story  -12.3892886  -14.1247647  -14.5301927  0.0  story  right  
+21  building a single system image cluter with gnuhurd pdf  story  -8.7115079  -11.7268247  -11.4332827  0.0  story  right  
+22  ask hn graph database with visual editor for personal use  ask_hn  -9.808418  -8.3141589  -10.1322527  0.0  ask_hn  right  
+23  compositional generalization through meta sequencetosequence learning  story  -2.4896592  -3.6810672  -3.7343127  0.0  story  right  
+24  ultralisp a fastmoving common lisp software distribution  story  -4.6937792  -5.1247647  -6.4332827  0.0  story  right  
+25  public post are implicit endorsement of the framework they discus  story  -11.1008478  -13.5227047  -14.1322527  0.0  story  right  
+26  âtoo cheap to meterâ a history of the phrase 2016  story  -9.2080577  -12.9072808  -13.7343127  0.0  story  right  
+27  security compliance at cloudflare  story  -2.7906892  -3.0790072  -3.7343127  0.0  story  right  
+28  relearn cs layout  story  -0.0917192  -0.6810672  -1.0353427  0.0  story  right  
+29  neural arabic question answering  story  -0.0917192  -0.6810672  -1.0353427  0.0  story  right  
+30  show hn i created a website to compare online service security need your help  ask_hn  -16.4896592  -16.4663717  -16.9384327  0.0  show_hn  wrong  
+31  keep your type small and your bug smaller  story  -9.5451765  -10.5227047  -11.4332827  0.0  story  right  
+32  what went down at wwdc  story  -7.7906892  -7.8748872  -9.1322527  0.0  story  right  
+33  home  story  -0.0917192  -0.6810672  -1.0353427  0.0  story  right  
+34  masonite 22 released a python web framework  story  -9.7906892  -10.5227047  -11.4332827  0.0  story  right  
+35  my product died because it got way too many user â here how  story  -14.9333567  -16.5227047  -16.4332827  0.0  story  right  
+36  what are tokio and async io all about  story  -9.4482665  -10.096736  -11.4332827  0.0  story  right  
+37  fc oral history of usb â why wasnât the plug reversible  story  -7.7998178  -11.902916  -11.0353427  0.0  story  right  
+38  what doe big tech know about you  story  -10.0917192  -10.2728272  -11.8312227  0.0  story  right  
+39  amanda knox roar against wrongful imprisonment in her tearful return to italy  story  -3.3715599  -4.4355545  -5.6374027  0.0  story  right  
