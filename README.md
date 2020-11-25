@@ -6,7 +6,14 @@ A program that classifies Hacker News data into corresponding post types.
 * Developed a Naive Bayes with ~92% accuracy in prediction results.
 
 ## Screenshots
+* ![](Screenshots/Capture2.PNG)
+* ![](Screenshots/Capture3.PNG)
+* ![](Screenshots/Capture4.PNG)
 
+## Results
+![](Screenshots/Capture1.PNG)
+![](Screenshots/Capture5.PNG)
+![](Screenshots/Capture6.PNG)
 
 ## Running instructions:-
 
