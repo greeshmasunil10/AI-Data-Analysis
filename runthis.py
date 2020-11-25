@@ -6,21 +6,16 @@
 import pandas as pd
 import nltk
 from nltk.stem import WordNetLemmatizer 
-from nltk.tokenize import MWETokenizer
 import time
 import os
 from collections import Counter
 import math
-from mailcap import show
-from nltk.tokenize.regexp import RegexpTokenizer
-from nltk.corpus import stopwords
 from builtins import input
 import matplotlib.pyplot as plt
 import matplotlib.pyplot as plt2
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics.classification import accuracy_score, recall_score,\
     precision_score, f1_score
-from test.test_lzma import INPUT
                                       
 
 lemmatizer = WordNetLemmatizer()
