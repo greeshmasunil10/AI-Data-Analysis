@@ -32,3 +32,7 @@ To run the code:
 * Check the "Output" folder for textfile results lie model,scores etc.*
 * Check "Output\frequency_filter_output" folder contains output for Infrequent word filtering (Experiment 4)
 * Check "Output\smooth_filter_output" folder contains output for smoothing output (Experiment 5)
+
+## Future Scope
+* Classify other websites
+* Take user defined classifications
