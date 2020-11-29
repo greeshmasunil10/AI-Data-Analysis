@@ -1,7 +1,7 @@
 # Hacker News Post Classification system
 
 ## Introduction
-A program that classifies Hacker News data into corresponding post types.
+Built an application that classifies Hacker News data into corresponding post types.
 * Used the HN posts from 2018 and 2019 (2,709,143 posts) as training/ testing set.
 * Developed a Naive Bayes with ~92% accuracy in prediction results.
 
